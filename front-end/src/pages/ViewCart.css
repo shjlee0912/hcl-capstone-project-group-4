@@ -1,0 +1,67 @@
+
+.cart-table-body td {
+    text-align: center;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.cart-table-body td p {
+    text-align: left;
+    text-justify: left;
+    padding-left: 6px;
+}
+
+.cart-table-body td.remove {
+    text-align: left;
+    padding-left: 6px;
+}
+
+#checkout {
+    text-align: left;
+}
+
+.description {
+    font-size: 0.8rem;
+}
+
+.insufficient-error {
+    border-color: red;
+    color: red;
+}
+
+.insufficient-error-msg::after {
+    content: "insufficient stock";
+    color: red;
+    position: absolute;
+
+}
+.product-image {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.quant {
+    width: 2rem;
+}
+
+.quant-updator {
+    display: inline-flex;
+    justify-content: space-around;
+}
+
+.quant-updator input{
+    margin: auto 2px;
+}
+
+#total {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+#total-label {
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-align: right;
+}
+
+
