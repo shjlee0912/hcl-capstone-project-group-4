@@ -3,10 +3,13 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { priceFormatter } from '../utilFunctions';
 import { addToCart } from '../redux/cartSlice';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 
 
 export const ProductCard = ({product}) => {
+
+    const cartIds = useSelector(state => state.cart.items.map(item => item.product.id));
 
     const [quant, setQuant] = useState(1);
     const dispatch = useDispatch();
@@ -33,8 +36,11 @@ export const ProductCard = ({product}) => {
             <Card.Footer bsPrefix="card-footer">
                 <div><strong>{priceFormatter.format(product.price)}</strong></div>
                 {product.inventory>0
-                    ?<><Button variant="primary" size="sm" onClick={() => dispatch(addToCart({product: product, quantity: quant}))}>Add to Cart</Button>
+                    ?(cartIds.includes(product.id)
+                        ?<LinkContainer to="/cart"><Button variant="outline-primary" size="sm">in your cart</Button></LinkContainer>
+                        :<><Button variant="primary" size="sm" onClick={() => dispatch(addToCart({product: product, quantity: quant}))}>Add to Cart</Button>
                     <input className="quant-input" type="number" min={1} max={product.inventory} value={quant} onChange={(event) => validateAndUpdate(event)}/></>
+                    )
                     :<span>out of stock</span>
                 }
             </Card.Footer>
