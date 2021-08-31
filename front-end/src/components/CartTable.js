@@ -2,20 +2,18 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart, removeFromCart, updateQuantity } from '../redux/cartSlice';
 import { QuantityUpdator } from './QuantityUpdator';
-import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import { LinkContainer } from 'react-router-bootstrap';
+import { priceFormatter, ellipsis } from '../utilFunctions';
 
-const priceFormatter = new Intl.NumberFormat("en-US", {style: 'currency', currency: 'USD'});
 
 export const CartTable = () => {
     let items = useSelector( state => state.cart.items );
     const dispatch = useDispatch();
-    const ellipsis = (text, maxLen) => text.length>maxLen?text.substr(0,maxLen-3)+"...":text;
-    return (<Container>
-        <Table striped bordered size='sm'>
+    return (<>
+        <Table striped bordered size='sm' responsive>
             <thead>
                 <tr>
                     <th></th>
@@ -30,7 +28,7 @@ export const CartTable = () => {
             <tbody className="cart-table-body">
                 {items.map( ({product, quantity}) => {
                     return (<tr key={product.id}>
-                        <td><Image src="https://via.placeholder.com/500" roundedCircle className="product-image"/></td>
+                        <td><Image src={product.image} alt={"image of "+product.name}roundedCircle className="product-image"/></td>
                         <td>{product.name}</td>
                         <td className="description"><p>{ellipsis(product.description, 40)}</p></td>
                         <td>{priceFormatter.format(product.price)}</td>
@@ -53,6 +51,6 @@ export const CartTable = () => {
         </Table>
 
 
-    </Container>);
+    </>);
 
 }

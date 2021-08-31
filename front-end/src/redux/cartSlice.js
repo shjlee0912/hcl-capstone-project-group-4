@@ -15,6 +15,7 @@ export const cartSlice = createSlice({
                 product: {
                     id: 1,
                     name: "Product",
+                    image: "https://via.placeholder.com/500x200",
                     brand: "BrandName",
                     inventory: 40,
                     price: 23.75,
@@ -26,6 +27,7 @@ export const cartSlice = createSlice({
                 product: {
                     id: 2,
                     name: "Product2",
+                    image: "https://via.placeholder.com/200x300",
                     brand: "BrandName2",
                     inventory: 4,
                     price: 400.89,
@@ -33,26 +35,17 @@ export const cartSlice = createSlice({
                 },
                 quantity: 1,
             },
-            {
-                product: {
-                    id: 3,
-                    name: "Product3",
-                    brand: "BrandName3",
-                    inventory: 4000,
-                    price: 0.99,
-                    description: "this is a third and final placeholder item for testing the view cart page",
-                },
-                quantity: 10,
-            },
         ]
     },
     reducers: {
-        addToCart(state, {product, quantity}) {
+        addToCart(state, action) {
+            let {product, quantity} = action.payload;
+            quantity = parseInt(quantity);
             if(state.items.filter( item => item.product.id===product.id ).length===0) {
-                state.items.add({
+                state.items.push({
                     product: product,
                     quantity: quantity
-                })
+                });
             }
         },
 

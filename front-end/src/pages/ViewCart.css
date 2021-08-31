@@ -35,9 +35,34 @@
     position: absolute;
 
 }
-.product-image {
-    max-width: 100px;
-    max-height: 100px;
+
+@media only screen and (max-width: 576px) {
+    .product-image {
+        height: 40px;
+        max-width: 50px;
+    }
+
+}
+
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+    .product-image {
+        height: 70px;
+        max-width: 100px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+    .product-image {
+        height: 90px;
+        max-width: 120px;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .product-image {
+        height: 140px;
+        max-width: 280px;
+    }
 }
 
 .quant {
