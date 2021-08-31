@@ -11,7 +11,7 @@ import './Topbar.css';
 export const Topbar = () => {
     const numCartItems = useSelector(state => state.cart.items.length);
     return(<>
-        <Navbar sticky="top" bg="light" expand="md" bsPrefix="navbar">
+        <Navbar sticky="top" bg="light" expand="md">
                 <LinkContainer className="m-2" to="/"><Navbar.Brand >Capstone Project</Navbar.Brand></LinkContainer>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse className="justify-content-between">
