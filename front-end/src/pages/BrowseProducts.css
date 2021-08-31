@@ -1,0 +1,33 @@
+
+.card-body {
+    max-height: 240x;
+    overflow: hidden;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.card-image img {
+    height: 130px;
+    object-fit: cover;
+}
+
+.card-subtitle {
+    color:darkgray;
+}
+
+.card-text {
+    max-height: 130px;
+    overflow-y: auto;
+}
+
+div.card {
+    height: 370px;
+}
+
+.quant-input {
+    width: 2.5rem;
+}

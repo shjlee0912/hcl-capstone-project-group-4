@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Topbar } from './components/Topbar';
+import { BrowseProducts } from './pages/BrowseProducts';
 import { ViewCart } from './pages/ViewCart';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -7,7 +9,7 @@ function App() {
   return (<>
   
       <Router>
-        {/* a topbar could go here */}
+        <Topbar/>
         <Switch>
           <Route exact path="/">
             homepage
@@ -19,7 +21,7 @@ function App() {
             registration form goes here
           </Route>
           <Route path="/products">
-            product catalog could go here
+            <BrowseProducts/>
           </Route>
           <Route path="/cart">
             <ViewCart/>

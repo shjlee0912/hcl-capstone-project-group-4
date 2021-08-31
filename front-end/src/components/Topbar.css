@@ -1,0 +1,21 @@
+
+#cart-size {
+    width: 1.4rem;
+    height: 1.4rem;
+    font-size: 0.9rem;
+    color: green;
+    border: 1px solid rgb(84, 204, 212);
+    border-radius: 100%;
+    text-align: center;
+    display: inline-block;   
+}
+
+.link {
+    cursor: pointer;
+    padding: 1px 10px;
+}
+
+.link:hover {
+    background-color: rgb(241, 241, 241);
+}
+
