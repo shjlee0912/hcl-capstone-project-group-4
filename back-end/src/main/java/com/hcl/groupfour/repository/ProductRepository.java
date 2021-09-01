@@ -11,6 +11,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	//Search product by its name
 	List<Product> findByName(String name);
 	
+	//Search products with name containing input 'name'
+	List<Product> findByNameContaining(String name);
+	
 	//Search product having (this.price <= price)
 	List<Product> findByPriceLessThanEqual(float price);
 	
