@@ -2,6 +2,7 @@ package com.hcl.groupfour.model;
 
 import java.sql.Blob;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +27,7 @@ public class Product {
 	private String brand;
 	private int inventory;
 	private float price;
+	@Column(name="image",nullable=true)
 	private Blob image;
 	private String description;
 	private float rating;
