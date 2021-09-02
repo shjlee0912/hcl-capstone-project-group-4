@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ProductList } from '../components/ProductList';
-import { addToCart } from '../redux/cartSlice';
 import { filter } from '../redux/catalogSlice';
 import Spinner from 'react-bootstrap/Spinner'
 import Container from 'react-bootstrap/Container';
@@ -22,7 +21,7 @@ export const BrowseProducts = () => {
         {productsLoaded
             ?<ProductList data-testid="product-list" products={products}/>
             :<Container>
-            <Row className=" mt-5 spinner-row">
+            <Row className="mt-5 spinner-row">
                 <Col>
                     <Spinner animation="grow" variant="secondary"></Spinner>
                 </Col>

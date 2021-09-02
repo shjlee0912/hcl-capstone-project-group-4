@@ -25,10 +25,8 @@ public class Address {
 	private String firstName;
 	
 	private String lastName;
-	
-	private int streetNum;
-	
-	private String streetName;
+		
+	private String streetAddr; //address line 1
 	
 	private String city;
 	

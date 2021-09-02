@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Home = (props: { name: string }) => {
+const Home = (props) => {
     return (
         <div>
             {props.name ? 'Hi ' + props.name : 'You are not logged in'}
