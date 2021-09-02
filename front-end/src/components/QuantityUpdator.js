@@ -8,12 +8,12 @@ import { BsDashCircle } from 'react-icons/bs'
 
 export const QuantityUpdator = ( {prodId} ) => {
     let item = useSelector(state => state.cart.items.find(i => i.product.id===prodId));
+    const dispatch = useDispatch();
     if(!item) {
         return(<p style={{color: "red"}}>invalid item</p>);
     }
     let quant = item.quantity;
     let product = item.product;
-    const dispatch = useDispatch();
     const increment = (event) => {
         dispatch(incrementQuantity(prodId));
     }

@@ -31,3 +31,7 @@ div.card {
 .quant-input {
     width: 2.5rem;
 }
+
+.spinner-row {
+    height: 370px;
+}

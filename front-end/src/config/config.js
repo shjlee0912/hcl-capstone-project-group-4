@@ -2,7 +2,7 @@
 //contains location of Spring Boot api.
 //This configuration will need to be updated to support deployment soon
 const dev = {
-    API_URL: "http://localhost:8081"
+    API_URL: "http://localhost:9191"
 }
 
 const prod = {}
