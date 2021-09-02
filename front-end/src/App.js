@@ -9,7 +9,7 @@ function App() {
   return (<>
   
       <Router>
-        <Topbar/>
+        <Topbar data-testid="topbar"/>
         <Switch>
           <Route exact path="/">
             homepage

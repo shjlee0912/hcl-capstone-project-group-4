@@ -1,11 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import ProductsService from '../services/products.service';
 
-//this slice might not be used, local state may or may not be sufficient for the catalog
+
+export const getProducts = createAsyncThunk (
+    'products/getProducts',
+    async (arg, { getState }) => {
+        const filter = getState(state => state.catalog.filter);
+        const response = await ProductsService.getProducts();
+        return response.data;
+    }
+)
 
 export const catalogSlice = createSlice({
 
     name: 'catalog',
     initialState: {
+        loaded: false,
+        error: false,
         products:  [
             {
                     id: 1,
@@ -48,8 +59,25 @@ export const catalogSlice = createSlice({
         sort: {}, //sorting mechanism yet to be determined
     },
     reducers: {
-        //TODO: create reducers
+        //updates the filter and marks the products as not loaded
+        filter(state, action) {
+            state.filter = action.payload;
+            state.loaded = false;
+        }
     },
+    extraReducers: (builder) => {
+        builder.addCase(getProducts.pending, (state, action) => {
+            state.loaded = false;
+        });
+        builder.addCase(getProducts.fulfilled, (state, action) => {
+            state.products = action.payload;
+        });
+        builder.addCase(getProducts.rejected, (state, action) => {
+            state.error = true;
+        });
+    }
 });
+
+export const { filter } = catalogSlice.actions;
 
 export default catalogSlice.reducer;

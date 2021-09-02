@@ -26,7 +26,7 @@ export const ProductCard = ({product}) => {
     return(<>
         <Card as="div" bsPrefix="card">
             <span className="card-image">
-                <Card.Img src={product.image} alt="product image"/>
+                <Card.Img src={product.image} alt={`image of ${product.name}`}/>
             </span>
             <Card.Body as="div" bsPrefix="card-body">
                 <Card.Title>{product.name}</Card.Title>
@@ -39,7 +39,7 @@ export const ProductCard = ({product}) => {
                     ?(cartIds.includes(product.id)
                         ?<LinkContainer to="/cart"><Button variant="outline-primary" size="sm">in your cart</Button></LinkContainer>
                         :<><Button variant="primary" size="sm" onClick={() => dispatch(addToCart({product: product, quantity: quant}))}>Add to Cart</Button>
-                    <input className="quant-input" type="number" min={1} max={product.inventory} value={quant} onChange={(event) => validateAndUpdate(event)}/></>
+                    <input data-testid="qty-input" className="quant-input" type="number" min={1} max={product.inventory} value={quant} onChange={(event) => validateAndUpdate(event)}/></>
                     )
                     :<span>out of stock</span>
                 }

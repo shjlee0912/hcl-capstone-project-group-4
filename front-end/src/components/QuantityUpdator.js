@@ -8,7 +8,10 @@ import { BsDashCircle } from 'react-icons/bs'
 
 export const QuantityUpdator = ( {prodId} ) => {
     let item = useSelector(state => state.cart.items.find(i => i.product.id===prodId));
-    let quant = item?item.quantity:0;
+    if(!item) {
+        return(<p style={{color: "red"}}>invalid item</p>);
+    }
+    let quant = item.quantity;
     let product = item.product;
     const dispatch = useDispatch();
     const increment = (event) => {
@@ -28,11 +31,11 @@ export const QuantityUpdator = ( {prodId} ) => {
     return (  <Container>
         <span className={quant<=product.inventory?"":"insufficient-error-msg"}>
             <div className="quant-updator">
-                <Button variant='danger' size='sm' onClick={(event) => decrement(event)}><BsDashCircle/></Button>
-                    <input type="text" value={quant} className={quant<=product.inventory && quant>0?"quant":"quant insufficient-error"} onChange={(event) => validateAndUpdate(event)} />
-                <Button variant='success' size='sm' onClick={(event) => increment(event)}><BsPlusCircle/></Button>
+                <Button data-testid="dec-btn" variant='danger' size='sm' onClick={(event) => decrement(event)}><BsDashCircle/></Button>
+                    <input data-testid="quant-input" type="text" value={quant} className={quant<=product.inventory && quant>0?"quant":"quant insufficient-error"} onChange={(event) => validateAndUpdate(event)} />
+                <Button data-testid="inc-btn" variant='success' size='sm' onClick={(event) => increment(event)}><BsPlusCircle/></Button>
             </div>
-                <br/>
+            <br/>
         </span>
     </Container>);
 }

@@ -13,7 +13,7 @@ export const CartTable = () => {
     let items = useSelector( state => state.cart.items );
     const dispatch = useDispatch();
     return (<>
-        <Table striped bordered size='sm' responsive>
+        <Table data-testid="table" striped bordered size='sm' responsive>
             <thead>
                 <tr>
                     <th></th>
