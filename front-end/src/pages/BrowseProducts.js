@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ProductList } from '../components/ProductList';
-import { filter } from '../redux/catalogSlice';
+import { FilterForm } from '../components/FilterForm';
 import Spinner from 'react-bootstrap/Spinner'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -18,6 +18,8 @@ export const BrowseProducts = () => {
     let filterObject = useSelector(state => state.catalog.filter);
     let products = useSelector(state => state.catalog.products);
     return (<>
+        <div className="d-flex justify-content-center mt-3"><h2>Product Catalog</h2></div>
+        <FilterForm/>
         {productsLoaded
             ?<ProductList data-testid="product-list" products={products}/>
             :<Container>

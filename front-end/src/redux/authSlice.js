@@ -25,21 +25,25 @@ export const logout = createAsyncThunk(
     }
 )
 
+const initialState = {
+    loggedIn: true,
+    waiting: false,
+    loginFailed: false,
+    logoutFailed: false,
+    user: null,
+};
+
 export const authSlice = createSlice({
 
     name: 'auth',
-    initialState: {
-        loggedIn: false,
-        waiting: false,
-        loginFailed: false,
-        logoutFailed: false,
-        user: null,
-    },
+    initialState: initialState,
     reducers: {
         setUsername: (state, action) => {
             state.username = action.payload;
         },
-        //need to add more reducers and asynchrounous authentication api calls
+        reset: (state) => {
+            state = initialState;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(login.pending, (state) => {

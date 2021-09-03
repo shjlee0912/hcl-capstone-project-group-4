@@ -15,7 +15,7 @@ export const catalogSlice = createSlice({
 
     name: 'catalog',
     initialState: {
-        loaded: false,
+        loaded: true,
         error: false,
         products:  [
             {
@@ -55,14 +55,34 @@ export const catalogSlice = createSlice({
                 description: "this is a fourth placeholder item",
         },
         ],
-        filters: [], //filtering mechanism yet to be determined
-        sort: {}, //sorting mechanism yet to be determined
+        filter: {
+            categories: [],
+            name: null,
+            minPrice: null,
+            maxPrice: null
+        }, //filtering mechanism yet to be determined
+        sort: "AZ", //sorting mechanism yet to be determined
+                    //possible A-Z, Z-A, price asc, price desc
+        categories: ["categoryA", "catB", 'a',"C"],
     },
     reducers: {
         //updates the filter and marks the products as not loaded
         filter(state, action) {
             state.filter = action.payload;
-            state.loaded = false;
+            //state.loaded = false;
+        },
+        resetFilterAndSort(state) {
+           state.filter = {
+                categories: [],
+                name: null,
+                minPrice: null,
+                maxPrice: null
+           };
+           state.sort = "AZ"
+        },
+        sort(state, action) {
+            state.sort = action.payload;
+            //state.loaded = false;
         }
     },
     extraReducers: (builder) => {
@@ -78,6 +98,6 @@ export const catalogSlice = createSlice({
     }
 });
 
-export const { filter } = catalogSlice.actions;
+export const { filter, resetFilterAndSort, sort } = catalogSlice.actions;
 
 export default catalogSlice.reducer;

@@ -1,7 +1,9 @@
 import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
+import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav'
+import Nav from 'react-bootstrap/Nav';
+import Badge from 'react-bootstrap/Badge';
 import { logout } from '../redux/authSlice';
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,8 +25,8 @@ export const Topbar = () => {
                     <div className="toggle-margin">
                         <Nav> 
                             {loggedIn
-                            ?(<><Navbar.Text><LinkContainer className="link" to="/cart"><div><AiOutlineShoppingCart size="1.7rem"/><div id="cart-size">{numCartItems}</div></div></LinkContainer></Navbar.Text>
-                            <Navbar.Text className="link" onClick={() => dispatch(logout())}>Logout</Navbar.Text></>)
+                            ?(<Container><Navbar.Text className="link" ><LinkContainer to="/cart"><span><AiOutlineShoppingCart size="1.7rem"/><Badge pill bg="info">{numCartItems}</Badge></span></LinkContainer></Navbar.Text>
+                            <Navbar.Text className="link" onClick={() => dispatch(logout())}>Logout</Navbar.Text></Container>)
                             :(<><LinkContainer className="link" to="/login"><Navbar.Text>Login</Navbar.Text></LinkContainer>
                             <LinkContainer className="link" to="/register"><Navbar.Text>Sign Up</Navbar.Text></LinkContainer></>)
                             }
