@@ -64,12 +64,13 @@ export const catalogSlice = createSlice({
         sort: "AZ", //sorting mechanism yet to be determined
                     //possible A-Z, Z-A, price asc, price desc
         categories: ["categoryA", "catB", 'a',"C"],
+        page: 1
     },
     reducers: {
         //updates the filter and marks the products as not loaded
         filter(state, action) {
             state.filter = action.payload;
-            //state.loaded = false;
+            state.loaded = false;
         },
         resetFilterAndSort(state) {
            state.filter = {
@@ -78,11 +79,22 @@ export const catalogSlice = createSlice({
                 minPrice: null,
                 maxPrice: null
            };
-           state.sort = "AZ"
+           state.sort = "AZ";
+           state.page = 1;
+           state.loaded = false;
         },
         sort(state, action) {
             state.sort = action.payload;
-            //state.loaded = false;
+            state.loaded = false;
+        },
+        setPage(state, action) {
+            state.page = action.payload;
+        },
+        incrementPage(state) {
+            state.page = state.page+1;
+        },
+        decrementPage(state) {
+            state.page = state.page-1;
         }
     },
     extraReducers: (builder) => {
@@ -98,6 +110,6 @@ export const catalogSlice = createSlice({
     }
 });
 
-export const { filter, resetFilterAndSort, sort } = catalogSlice.actions;
+export const { filter, resetFilterAndSort, sort, setPage, incrementPage, decrementPage } = catalogSlice.actions;
 
 export default catalogSlice.reducer;

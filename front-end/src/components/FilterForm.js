@@ -26,7 +26,10 @@ export const FilterForm = () => {
                 <Accordion.Header>
                     <Container className="d-flex justify-content-between align-items-center">
                         <h6>search</h6>
-                        <Button variant="warning" onClick={() => dispatch(resetFilterAndSort())}>clear all</Button>
+                        <Button as="div" variant="warning" onClick={(e) => {
+                            e.stopPropagation();
+                            dispatch(resetFilterAndSort())
+                        }}>clear all</Button>
                     </Container>
                 </Accordion.Header>
                 <Accordion.Body>
@@ -49,7 +52,8 @@ export const FilterForm = () => {
                             {currentFilter.categories.map( cat => (
                             <Badge key={cat} pill className="m-2">
                                 <div className="d-flex align-items-center justify-content-between">
-                                    <span className="m-1">{cat}</span><CloseButton onClick={
+                                    <span className="m-1">{cat}</span>
+                                    <CloseButton onClick={
                                         () => {
                                             let newCategories = currentFilter.categories.filter( c => c!==cat);
                                             dispatch(filter({...currentFilter, categories: newCategories}));

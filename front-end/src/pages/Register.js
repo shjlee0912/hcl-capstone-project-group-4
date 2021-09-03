@@ -36,14 +36,14 @@ const Register = () => {
             firstName,
             lastName,
             phone,
-            address: {
+            addresses: [{
                 firstName,
                 lastName,
                 streetAddr,
                 city,
                 state,
                 zipCode
-            }
+            }]
         }
         if(password===passwordConfirm) {
             dispatch(register(userInfo));

@@ -28,6 +28,11 @@ div.card {
     height: 370px;
 }
 
+.page-input {
+    max-width: 3rem;
+    margin: 3px 0.5rem;
+}
+
 .quant-input {
     width: 2.5rem;
 }

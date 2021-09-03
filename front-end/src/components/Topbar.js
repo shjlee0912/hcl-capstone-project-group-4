@@ -25,7 +25,7 @@ export const Topbar = () => {
                     <div className="toggle-margin">
                         <Nav> 
                             {loggedIn
-                            ?(<Container><Navbar.Text className="link" ><LinkContainer to="/cart"><span><AiOutlineShoppingCart size="1.7rem"/><Badge pill bg="info">{numCartItems}</Badge></span></LinkContainer></Navbar.Text>
+                            ?(<Container><LinkContainer className="link" to="/cart"><Navbar.Text><AiOutlineShoppingCart size="1.7rem"/><Badge pill bg="info">{numCartItems}</Badge></Navbar.Text></LinkContainer>
                             <Navbar.Text className="link" onClick={() => dispatch(logout())}>Logout</Navbar.Text></Container>)
                             :(<><LinkContainer className="link" to="/login"><Navbar.Text>Login</Navbar.Text></LinkContainer>
                             <LinkContainer className="link" to="/register"><Navbar.Text>Sign Up</Navbar.Text></LinkContainer></>)
