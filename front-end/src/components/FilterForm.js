@@ -43,11 +43,11 @@ export const FilterForm = () => {
                                 dispatch(filter({...currentFilter, categories: newCategories }));
                             }}>
                                 <option value="">categories...</option>
-                                {categories.filter(cat => !currentFilter.categories.includes(cat)).sort().map( cat => (
-                                    <option key={cat} value={cat}>
+                                {categories.filter(cat => !currentFilter.categories.includes(cat)).sort().map( cat => (<>
+                                    <option data-testid={cat} key={cat} value={cat}>
                                         {cat}
                                     </option>
-                                ))}
+                                </>))}
                             </Form.Select>
                             {currentFilter.categories.map( cat => (
                             <Badge key={cat} pill className="m-2">
@@ -66,22 +66,22 @@ export const FilterForm = () => {
                         <Col xs={12} md={6} className="mb-2">
                             <InputGroup>
                                 <InputGroup.Text>name</InputGroup.Text>
-                                <FormControl type="text" value={currentFilter.name||""} onChange={ e => dispatch(filter({...currentFilter, name: e.target.value===""?null:e.target.value}))}/>
+                                <FormControl data-testid="name" type="text" value={currentFilter.name||""} onChange={ e => dispatch(filter({...currentFilter, name: e.target.value===""?null:e.target.value}))}/>
                             </InputGroup>
                         </Col>
                         <Col xs={12} md={6} className="mb-2">
                             <InputGroup className="mb-1">
                                 <InputGroup.Text>min price: $</InputGroup.Text>
-                                <FormControl type="text" pattern={pricePattern} value={currentFilter.minPrice||""} onChange={ e => dispatch(filter({...currentFilter, minPrice: e.target.value===""?null:Number(e.target.value)}))}/>
+                                <FormControl data-testid="min-price" type="text" pattern={pricePattern} value={currentFilter.minPrice||""} onChange={ e => dispatch(filter({...currentFilter, minPrice: e.target.value===""?null:Number(e.target.value)}))}/>
                             </InputGroup>
                             <InputGroup>
                                 <InputGroup.Text>max price: $</InputGroup.Text>
-                                <FormControl type="text" pattern={pricePattern} value={currentFilter.maxPrice||""} onChange={ e => dispatch(filter({...currentFilter, maxPrice: e.target.value===""?null:Number(e.target.value)}))}/>
+                                <FormControl data-testid="max-price" type="text" pattern={pricePattern} value={currentFilter.maxPrice||""} onChange={ e => dispatch(filter({...currentFilter, maxPrice: e.target.value===""?null:Number(e.target.value)}))}/>
                             </InputGroup>
                         </Col>
                         <Col xs={6} md={3} className="mb-2"></Col>
                         <Col xs={12} md={3} className="mb-2"><Form.Label>Order By</Form.Label>
-                                <Form.Select value={currentSort} onChange={e => dispatch(sort(e.target.value))}>
+                                <Form.Select data-testid="sort" value={currentSort} onChange={e => dispatch(sort(e.target.value))}>
                                     <option value="AZ">name A-Z</option>
                                     <option value="ZA">name Z-A</option>
                                     <option value="PRICE_ASC">Price: low to high</option>
