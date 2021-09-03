@@ -1,3 +1,4 @@
+/*
 package com.hcl;
 
 import org.springframework.boot.SpringApplication;
@@ -13,3 +14,4 @@ public class SpringBootSecurityJWTApplication {
 		SpringApplication.run(SpringBootSecurityJWTApplication.class, args);
 	}
 }
+*/
