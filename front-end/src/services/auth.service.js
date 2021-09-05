@@ -3,16 +3,16 @@ import {url} from '../config/config.js';
 
 class AuthService {
     login(username, password) {
-        return axios.post(url+"/login", {username: username, password: password}, {withCredentials: true})
+        return axios.post(url+"/authenticate", {username: username, password: password}, {withCredentials: true})
     };
 
     register(user) {
-        return axios.post(url+"/regitster", user, {withCredentials: true})
+        return axios.post(url+"/register", user, {withCredentials: true})
     };
 
-    logout() {
-        return axios.post(url+"/logout", {withCredentials: true})
-    };
+    getUserInfo() {
+        return axios.get(url+"/user", {withCredentials: true, headers: {Authorization: "Bearer "+localStorage.getItem("jwt")}});
+    }
 }
 
 

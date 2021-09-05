@@ -13,6 +13,7 @@ import './Topbar.css';
 export const Topbar = () => {
     const numCartItems = useSelector(state => state.cart.items.length);
     const loggedIn = useSelector(state => state.auth.loggedIn);
+    const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
     return(<>
         <Navbar sticky="top" bg="light" expand="md">
@@ -24,12 +25,11 @@ export const Topbar = () => {
                     </Nav>
                     <div className="toggle-margin">
                         <Nav> 
-                            {loggedIn
-                            ?(<Container><LinkContainer className="link" to="/cart"><Navbar.Text><AiOutlineShoppingCart size="1.7rem"/><Badge pill bg="info">{numCartItems}</Badge></Navbar.Text></LinkContainer>
-                            <Navbar.Text className="link" onClick={() => dispatch(logout())}>Logout</Navbar.Text></Container>)
-                            :(<><LinkContainer className="link" to="/login"><Navbar.Text>Login</Navbar.Text></LinkContainer>
-                            <LinkContainer className="link" to="/register"><Navbar.Text>Sign Up</Navbar.Text></LinkContainer></>)
-                            }
+                            {loggedIn?<Navbar.Text ><Badge bg="secondary">Logged in as {user?user.username:null}</Badge></Navbar.Text>:null}
+                            {loggedIn? <LinkContainer className="link" to="/cart"><Navbar.Text><AiOutlineShoppingCart size="1.7rem"/><Badge pill bg="info">{numCartItems}</Badge></Navbar.Text></LinkContainer>:null}
+                            {loggedIn?<Navbar.Text className="link" onClick={() => dispatch(logout())}>Logout</Navbar.Text>:null}
+                            {loggedIn?null:<LinkContainer className="link" to="/login"><Navbar.Text>Login</Navbar.Text></LinkContainer>}
+                            {loggedIn?null:<LinkContainer className="link" to="/register"><Navbar.Text>Sign Up</Navbar.Text></LinkContainer>}
                         </Nav>
                     </div>
                 </Navbar.Collapse>

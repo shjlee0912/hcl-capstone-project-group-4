@@ -34,9 +34,6 @@ public class ProductController {
 				ps.getAllProductsContainingName(name).forEach(products::add);
 			}
 			
-			if(products.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
 			return new ResponseEntity<>(products,HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
@@ -57,18 +54,6 @@ public class ProductController {
 		}
 	}
 	
-	@GetMapping("/products/sort-rating")
-	public ResponseEntity<List<Product>> getAllProductsSortedByRating(@RequestParam(defaultValue="true") boolean ascending){
-		try {
-			List<Product> products = ps.sortProductByRating(ascending);			
-			if(products.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-			return new ResponseEntity<>(products,HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
 	
 	@GetMapping("/products/filter-price")
 	public ResponseEntity<List<Product>> getProductsFilteredByPrice(@RequestParam(defaultValue="0") float low, @RequestParam float high){
@@ -83,18 +68,6 @@ public class ProductController {
 		}
 	}
 	
-	@GetMapping("/products/filter-rating")
-	public ResponseEntity<List<Product>> getProductsFilteredByRating(@RequestParam(defaultValue="0") float low, @RequestParam(defaultValue="5") float high){
-		try {
-			List<Product> products = ps.filterProductByRatingBetween(low, high);
-			if(products.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-			return new ResponseEntity<>(products,HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
 	
 	@GetMapping("/products/{id}")
 	public ResponseEntity<Product> getProductById(@PathVariable("id") Long id){

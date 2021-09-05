@@ -28,14 +28,21 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false)
 	private String name;
+	
+	@Column(nullable = false)
 	private String brand;
+	
+	@Column(nullable = false)
 	private int inventory;
+	
+	@Column(nullable = false)
 	private float price;
 	@Column(name="image",nullable=true)
 	private Blob image;
 	private String description;
-	private float rating;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(

@@ -1,4 +1,4 @@
-package com.hcl.config2;
+package com.hcl.groupfour.config;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.hcl.service2.JwtUserDetailsService;
+import com.hcl.groupfour.service.JwtUserDetailsService;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
@@ -33,7 +33,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		final String requestTokenHeader = request.getHeader("Authorization");
-
 		String username = null;
 		String jwtToken = null;
 		// JWT Token is in the form "Bearer token". Remove Bearer word and get
@@ -50,10 +49,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		} else {
 			logger.warn("JWT Token does not begin with Bearer String");
 		}
-
 		// Once we get the token validate it.
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
 			UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
 
 			// if token is valid configure Spring Security to manually set

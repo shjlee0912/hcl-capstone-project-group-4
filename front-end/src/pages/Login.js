@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../redux/authSlice';
+import { getUserInfo, login } from '../redux/authSlice';
 import Form from 'react-bootstrap/Form'
 import {Redirect} from "react-router-dom";
 import Container from 'react-bootstrap/Container';
@@ -17,7 +17,7 @@ const Login = () => {
     const dispatch = useDispatch();
     const submit = (e) => {
         e.preventDefault();
-        dispatch(login(username, password))
+        dispatch(login({username, password})).then(() => dispatch(getUserInfo()));
     }
 
     if (loggedIn) {
@@ -47,7 +47,7 @@ const Login = () => {
                                 onChange={e => setPassword(e.target.value)}
                             />
                         </Form.Group>
-                        <button className="w-100 btn btn-lg btn-primary" type="submit">
+                        <button className="w-100 btn btn-lg btn-primary" onClick={submit}>
                             {waiting?<Spinner animation="border"/>:null}
                             Sign in
                         </button>

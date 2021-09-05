@@ -62,7 +62,7 @@ export const catalogSlice = createSlice({
             maxPrice: null
         }, //filtering mechanism yet to be determined
         sort: "AZ", //sorting mechanism yet to be determined
-                    //possible A-Z, Z-A, price asc, price desc
+                    //possible AZ, ZA, PRICE_ASC, PRICE_DESC
         categories: ["categoryA", "catB", 'a',"C"],
         page: 1
     },

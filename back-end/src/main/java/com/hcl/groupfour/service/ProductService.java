@@ -37,7 +37,6 @@ public class ProductService {
 			p.setPrice(prd.getPrice());
 			p.setImage(prd.getImage());
 			p.setDescription(prd.getDescription());
-			p.setRating(prd.getRating());
 			return pr.save(p);
 		}
 		return null;
@@ -59,19 +58,10 @@ public class ProductService {
 		}
 	}
 	
-	public List<Product> sortProductByRating(boolean ascending){
-		if(ascending) {
-			return pr.findByOrderByRating();
-		} else {
-			return pr.findByOrderByPriceDesc();
-		}
-	}
+
 	
 	public List<Product> filterProductByPriceBetween(float price1, float price2){
 		return pr.findByPriceBetween(price1, price2);
 	}
-	
-	public List<Product> filterProductByRatingBetween(float rating1, float rating2){
-		return pr.findByRatingBetween(rating1, rating2);
-	}
+
 }

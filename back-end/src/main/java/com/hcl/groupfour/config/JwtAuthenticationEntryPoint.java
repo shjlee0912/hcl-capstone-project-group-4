@@ -1,4 +1,4 @@
-package com.hcl.config2;
+package com.hcl.groupfour.config;
 
 import java.io.IOException;
 import java.io.Serializable;

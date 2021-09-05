@@ -1,4 +1,4 @@
-package com.hcl.model2;
+package com.hcl.groupfour.model;
 
 import java.io.Serializable;
 

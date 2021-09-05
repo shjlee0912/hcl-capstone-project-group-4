@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import { register } from '../redux/authSlice';
+import { getUserInfo, register } from '../redux/authSlice';
 import {Redirect} from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
@@ -19,7 +19,7 @@ const Register = () => {
     const [state, setState] = useState('');
     const [zipCode, setZipCode] = useState('');
     const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -35,7 +35,7 @@ const Register = () => {
             email,
             firstName,
             lastName,
-            phone,
+            phoneNumber,
             addresses: [{
                 firstName,
                 lastName,
@@ -46,7 +46,7 @@ const Register = () => {
             }]
         }
         if(password===passwordConfirm) {
-            dispatch(register(userInfo));
+            dispatch(register(userInfo)).then(() => dispatch(getUserInfo()));
         }
     }
 
@@ -81,7 +81,7 @@ const Register = () => {
                         <Form.Group className="mb-4">
                             <Form.Label>phone number</Form.Label>
                             <input type="tel" pattern="^(?:[0-9]{3}-){2}[0-9]{4}|[0-9]{10}$" className="form-control" 
-                                placeholder="xxx-xxx-xxxx" required onChange={e => setPhone(e.target.value)}
+                                placeholder="xxx-xxx-xxxx" required onChange={e => setPhoneNumber(e.target.value)}
                             />
                         </Form.Group>
 
@@ -123,7 +123,8 @@ const Register = () => {
                                 <Col xs={4} sm={3} md={3}>
                                     <Form.Label className="mb-0">state</Form.Label>
                                     <Form.Select value={state} onChange={(e) => setState(e.target.value)}>
-                                        {states.map(state => <option key="state.abbreviation" value={state.abbreviation}>{state.abbreviation}</option>)}
+                                        <option value='' ></option>
+                                        {states.map(state => <option key={state.abbreviation} value={state.abbreviation}>{state.abbreviation}</option>)}
                                     </Form.Select>
                                 </Col>
                                 <Col xs={6} sm={3} md={4}>
@@ -147,9 +148,9 @@ const Register = () => {
                             {password===passwordConfirm?null:<p style={{color: "red"}}>passwords must match</p>}
                         </Form.Group>
 
-                        <button className="w-100 btn btn-lg btn-primary mb-5" type="submit">
+                        <button className="w-100 btn btn-lg btn-primary mb-5" type="submit" onClick={submit}>
                             {waiting?<Spinner animation="border"/>:null}
-                            Sign in
+                            Register
                         </button>
                     </form>
                 </Col>
