@@ -3,26 +3,33 @@ import AuthService from '../services/auth.service';
 
 export const login = createAsyncThunk(
     'login',
-    async ({username, password}) => {
-        const response = await AuthService.login(username, password);
-        return response;
+    async ({username, password}, thunkAPI) => {
+        try {
+            let response = await AuthService.login(username, password);
+            return response;
+        } catch(err) {
+            return(thunkAPI.rejectWithValue(err.response));
+        }
     }
 )
 
 export const register = createAsyncThunk(
     'register',
-    async (user) => {
-        const response = await AuthService.register(user);
-        return response;
+    async (user, thunkAPI) => {
+        try {
+            let response = await AuthService.register(user);
+            return response;
+        } catch(err) {
+            return thunkAPI.rejectWithValue(err.response);
+        }
+        
     }
 )
 
 export const getUserInfo = createAsyncThunk(
     'getUserInfo',
     async () => {
-        console.log("getting user info")
         if(localStorage.getItem("jwt")) {
-            console.log("still getting user info")
             const response = await AuthService.getUserInfo();
             return response;
         }
@@ -33,7 +40,8 @@ const initialState = {
     loggedIn: localStorage.getItem('jwt')?true:false,
     waiting: false,
     loginFailed: false,
-    logoutFailed: false,
+    registerFailed: false,
+    usernameTaken: false,
     user: null,
 };
 
@@ -50,18 +58,20 @@ export const authSlice = createSlice({
             state.loggedIn = false;
             state.waiting = false;
             state.loginFailed = false;
-            state.logoutFailed = false;
+            state.registerFailed = false;
+            state.usernameTaken = false;
             state.user = null;
         }
     },
     extraReducers: (builder) => {
         builder.addCase(login.pending, (state) => {
             state.loginFailed = false;
+            state.registerFailed = false;
             state.waiting = true;
         });
         builder.addCase(login.fulfilled, (state, action) => {
             state.waiting = false;
-            if(action.payload.status==200) {
+            if(action.payload.status===200) {
                 localStorage.setItem("jwt", action.payload.data.token);
                 state.loggedIn = true;
             } else {
@@ -74,22 +84,30 @@ export const authSlice = createSlice({
         });
 
         builder.addCase(register.pending, (state) => {
+            state.usernameTaken = false;
             state.loginFailed = false;
-            state.loggedIn = false
+            state.loggedIn = false;
+            state.registerFailed = false;
             state.waiting = true;
         });
         builder.addCase(register.fulfilled, (state, action) => {
+            console.log(action.payload)
             state.waiting = false;
             if(action.payload.status===200) {
                 localStorage.setItem("jwt", action.payload.data.token);
                 state.loggedIn = true;
+            } else if(action.payload.status===409) {
+                state.usernameTaken = true;
+                state.loginFailed = true;
             } else {
                 state.loginFailed = true;
             }
         });
-        builder.addCase(register.rejected, (state) => {
+        builder.addCase(register.rejected, (state, action) => {
+            if(action.payload.status===409)
+                state.usernameTaken = true;
             state.waiting = false;
-            state.loginFailed = true;
+            state.registerFailed = true;
         });
 
         builder.addCase(getUserInfo.fulfilled, (state, action) => {
@@ -98,14 +116,12 @@ export const authSlice = createSlice({
                     state.loggedIn = true;
                     state.waiting = false;
                     state.loginFailed = false;
-                    state.logoutFailed = false;
                     state.user = action.payload.data;
                 } else {
                     localStorage.removeItem("jwt");
                     state.loggedIn = false;
                     state.waiting = false;
                     state.loginFailed = false;
-                    state.logoutFailed = false;
                     state.user = null;
                 }
             }
@@ -115,7 +131,7 @@ export const authSlice = createSlice({
             state.loggedIn = false;
             state.waiting = false;
             state.loginFailed = false;
-            state.logoutFailed = false;
+            state.usernameTaken = false;
             state.user = null;
         });
     }
