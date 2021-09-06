@@ -42,6 +42,8 @@ public class Product {
 	private float price;
 	@Column(name="image",nullable=true)
 	private Blob image;
+	
+	@Column(length = 1000)
 	private String description;
 	
 	@ManyToMany(fetch = FetchType.EAGER)

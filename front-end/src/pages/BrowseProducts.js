@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setPage, incrementPage, decrementPage } from '../redux/catalogSlice';
+import { setPage, incrementPage, decrementPage, getProducts, getCategories } from '../redux/catalogSlice';
 import { ProductList } from '../components/ProductList';
 import { FilterForm } from '../components/FilterForm';
 import Spinner from 'react-bootstrap/Spinner'
@@ -9,7 +9,6 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { getProducts } from '../redux/catalogSlice';
 import './BrowseProducts.css';
 
 export const BrowseProducts = () => {
@@ -19,7 +18,7 @@ export const BrowseProducts = () => {
     let [enteredPageNum, setEnteredPageNum] = useState(pageNum);
     useEffect(() => {
         if(!productsLoaded)
-            dispatch(getProducts())
+            dispatch(getProducts()).then(dispatch(getCategories()));
     }, [productsLoaded]);
     let resultsPerPage = 12;
     let products = useSelector(state => state.catalog.products);

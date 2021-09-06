@@ -40,6 +40,11 @@ public class ProductController {
 		}
 	}
 	
+	@GetMapping("/categories")
+	public ResponseEntity<List<String>> getAllCategoryNames() {
+		return ResponseEntity.ok(ps.getAllProductCategoryNames());
+	}
+	
 	@GetMapping("/products/sort-price")
 	public ResponseEntity<List<Product>> getAllProductsSortedByPrice(@RequestParam(defaultValue="true") boolean ascending){
 		try {

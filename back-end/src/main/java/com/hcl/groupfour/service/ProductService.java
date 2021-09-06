@@ -2,11 +2,13 @@ package com.hcl.groupfour.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.groupfour.model.Product;
+import com.hcl.groupfour.repository.CategoryRepository;
 import com.hcl.groupfour.repository.ProductRepository;
 
 @Service
@@ -14,6 +16,8 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository pr;
+	
+	@Autowired CategoryRepository cr;
 	
 	public List<Product> listAll(){
 		return pr.findAll();
@@ -40,6 +44,10 @@ public class ProductService {
 			return pr.save(p);
 		}
 		return null;
+	}
+	
+	public List<String> getAllProductCategoryNames() {
+		return cr.findAll().stream().map(cat -> cat.getName()).collect(Collectors.toList());
 	}
 	
 	public Product getById(Long id) {

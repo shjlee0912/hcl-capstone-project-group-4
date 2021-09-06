@@ -11,11 +11,19 @@ export const getProducts = createAsyncThunk (
     }
 )
 
+export const getCategories = createAsyncThunk (
+    'products.getCategories',
+    async() => {
+        const response = await ProductsService.getCategories();
+        return response.data?response.data:[];
+    }
+)
+
 export const catalogSlice = createSlice({
 
     name: 'catalog',
     initialState: {
-        loaded: true,
+        loaded: false,
         error: false,
         products:  [
             {
@@ -103,10 +111,15 @@ export const catalogSlice = createSlice({
         });
         builder.addCase(getProducts.fulfilled, (state, action) => {
             state.products = action.payload;
+            state.loaded = true;
         });
         builder.addCase(getProducts.rejected, (state, action) => {
             state.error = true;
+            state.loaded = true;
         });
+        builder.addCase(getCategories.fulfilled, (state, action) => {
+            state.categories = action.payload;
+        })
     }
 });
 
