@@ -77,11 +77,15 @@ export const cartSlice = createSlice({
             if(toChange = state.items.find( item => item.product.id===productId )) {
                 toChange.quantity -= 1;
             }
+        },
+
+        clearCart(state) {
+            state.items = [];
         }
     },
 
 });
 
-export const { addToCart, removeFromCart, updateQuantity, incrementQuantity, decrementQuantity } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity, incrementQuantity, decrementQuantity, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
 
