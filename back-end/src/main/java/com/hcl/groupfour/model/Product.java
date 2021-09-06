@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,6 +42,8 @@ public class Product {
 	
 	@Column(nullable = false)
 	private float price;
+	
+	@JsonIgnore
 	@Column(name="image",nullable=true)
 	private Blob image;
 	
