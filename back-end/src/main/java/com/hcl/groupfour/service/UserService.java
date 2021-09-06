@@ -5,7 +5,7 @@ import java.util.Arrays;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hcl.groupfour.Exception.UserNameUnavailableException;
@@ -30,7 +30,7 @@ public class UserService {
 	AddressRepository ar;
 	
 	@Autowired
-	BCryptPasswordEncoder encoder;
+	PasswordEncoder encoder;
 	
 	public User getUser(String username) {
 		return ur.findByUsername(username);
