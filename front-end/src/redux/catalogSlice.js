@@ -7,7 +7,7 @@ export const getProducts = createAsyncThunk (
     async (arg, { getState }) => {
         const filter = getState(state => state.catalog.filter);
         const response = await ProductsService.getProducts();
-        return response.data;
+        return response.data?response.data:[];
     }
 )
 
