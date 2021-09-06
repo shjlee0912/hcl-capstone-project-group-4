@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +27,7 @@ public class Category {
 	
 	private String name;
 
+	@JsonIgnore
 	@ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
 	private List<Product> products;
 	
