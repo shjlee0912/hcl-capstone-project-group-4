@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { createProduct } from "../actions/products";
 import { NewProductForm } from "./NewProductForm";
 
 class AddProduct extends Component {
@@ -111,4 +110,4 @@ class AddProduct extends Component {
     }
 }
 
-export default connect(null, {createProduct})(AddProduct);
+export default connect(null, {})(AddProduct);
