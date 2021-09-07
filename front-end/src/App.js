@@ -8,6 +8,7 @@ import { getUserInfo, logout } from './redux/authSlice'
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import AddProduct from './components/AddProduct'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
             checkout form could go here
           </Route>
           <Route path="/admin">
+            <AddProduct/>
             all admin routes can be nested here
           </Route>
         </Switch>
