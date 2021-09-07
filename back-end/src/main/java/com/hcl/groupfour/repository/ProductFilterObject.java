@@ -16,12 +16,7 @@ public class ProductFilterObject {
 	private boolean usingName = false;
 	private String nameIncludes = "";
 	
-	private boolean usingCategory = false;
-	private String category = "";
+	private boolean usingCategories = false;
+	private String[] categories = new String[0];
 	
-//	private boolean priceDesc = false;
-//	private boolean priceAsc = false;
-//	
-//	private boolean nameDesc = false;
-//	private boolean nameAsc = false;
 }

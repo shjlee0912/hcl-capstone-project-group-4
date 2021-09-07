@@ -19,7 +19,7 @@ public class ProductRepositoryFilteredImpl implements ProductRepositoryFiltered 
 	EntityManager entityManager;
 	
 	@Override
-	public List<Product> getFilteredProducts(ProductFilterObject filter, ProductSortObject sort) {
+	public List<Product> getFilteredProducts(ProductFilterObject filter, String sort) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Product> cr = cb.createQuery(Product.class);
 		Root<Product> product = cr.from(Product.class);
@@ -33,21 +33,18 @@ public class ProductRepositoryFilteredImpl implements ProductRepositoryFiltered 
 				predicates.add(cb.le(product.get("price"), filter.getMaxPrice()));
 			}
 			if(filter.isUsingName()) {
-				predicates.add(cb.like(product.get("name"), "%" + filter.getNameIncludes() + "&"));
-			}
-			if(filter.isUsingCategory()) {
-				predicates.add(cb.equal(product.get("category"), filter.getCategory()));
+				predicates.add(cb.like(product.get("name"), "%" + filter.getNameIncludes() + "%"));
 			}
 		}
 		cr.where(predicates.toArray(new Predicate[predicates.size()]));
-		if(sort.isPriceAsc()) {
-			cr.orderBy(cb.asc(product.get("price")));
-		} else if (sort.isPriceDesc()) {
-			cr.orderBy(cb.desc(product.get("price")));
-		} else if (sort.isNameAsc()) {
+		if("AZ".equals(sort)) {
 			cr.orderBy(cb.asc(product.get("name")));
-		} else if (sort.isNameDesc()) {
+		} else if ("ZA".equals(sort)) {
 			cr.orderBy(cb.desc(product.get("name")));
+		} else if ("PRICE_ASC".equals(sort)) {
+			cr.orderBy(cb.asc(product.get("price")));
+		} else if ("PRICE_DESC".equals(sort)) {
+			cr.orderBy(cb.desc(product.get("price")));
 		}
 		return entityManager.createQuery(cr).getResultList();
 	}

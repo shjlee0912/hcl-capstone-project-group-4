@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.groupfour.model.Product;
+import com.hcl.groupfour.repository.ProductFilterObject;
 import com.hcl.groupfour.service.ProductService;
 
 @RestController
@@ -25,15 +26,26 @@ public class ProductController {
 	private ProductService ps;
 	
 	@GetMapping("/products")
-	public ResponseEntity<List<Product>> getAllProducts(@RequestParam(required = false) String name){
+	public ResponseEntity<List<Product>> getAllProducts(){
 		try {
 			List<Product> products = new ArrayList<Product>();
-			if(name == null) {
-				ps.listAll().forEach(products::add);
+			return new ResponseEntity<>(ps.listAll(),HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PostMapping("/products_sorted")
+	public ResponseEntity<List<Product>> getFilteredProducts(@RequestBody ProductFilterObject obj, @RequestParam(required=false) String sort){
+		System.out.println(obj);
+		System.out.println(sort);
+		try {
+			List<Product> products = new ArrayList<Product>();
+			if(obj != null) {
+				ps.listFiltered(obj, sort).forEach(products::add);
 			} else {
-				ps.getAllProductsContainingName(name).forEach(products::add);
+				ps.listAll().forEach(products::add);
 			}
-			
 			return new ResponseEntity<>(products,HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
@@ -44,35 +56,7 @@ public class ProductController {
 	public ResponseEntity<List<String>> getAllCategoryNames() {
 		return ResponseEntity.ok(ps.getAllProductCategoryNames());
 	}
-	
-	@GetMapping("/products/sort-price")
-	public ResponseEntity<List<Product>> getAllProductsSortedByPrice(@RequestParam(defaultValue="true") boolean ascending){
-		try {
-			List<Product> products = ps.sortProductByPrice(ascending);
-			if(products.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-			
-			return new ResponseEntity<>(products,HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	
-	@GetMapping("/products/filter-price")
-	public ResponseEntity<List<Product>> getProductsFilteredByPrice(@RequestParam(defaultValue="0") float low, @RequestParam float high){
-		try {
-			List<Product> products = ps.filterProductByPriceBetween(low, high);
-			if(products.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-			return new ResponseEntity<>(products,HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
+
 	
 	@GetMapping("/products/{id}")
 	public ResponseEntity<Product> getProductById(@PathVariable("id") Long id){

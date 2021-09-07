@@ -6,5 +6,5 @@ import com.hcl.groupfour.model.Product;
 
 public interface ProductRepositoryFiltered {
 	
-	public List<Product> getFilteredProducts(ProductFilterObject filter, ProductSortObject sort);
+	public List<Product> getFilteredProducts(ProductFilterObject filter, String sort);
 }

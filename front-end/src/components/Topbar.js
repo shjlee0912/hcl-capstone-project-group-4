@@ -20,9 +20,9 @@ export const Topbar = () => {
         <Navbar sticky="top" bg="light" expand="md">
                 <div className="flex-shrink-0 mr-4">
             {/* Logo */}
-            <Link to="/" className="block" aria-label="Cruip">
+            <LinkContainer to="/" className="block" aria-label="Cruip">
                   <img className="mx-auto" src={require('./gm_logo.svg').default} width="140" height="140" alt="Hero" />
-            </Link>
+            </LinkContainer>
           </div>
                 <div className="toggle-margin"><Navbar.Toggle aria-controls="responsive-navbar-nav"/></div>
                 <Navbar.Collapse className="justify-content-between">

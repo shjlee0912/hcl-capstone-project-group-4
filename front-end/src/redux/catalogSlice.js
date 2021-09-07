@@ -5,8 +5,9 @@ import ProductsService from '../services/products.service';
 export const getProducts = createAsyncThunk (
     'products/getProducts',
     async (arg, { getState }) => {
-        const filter = getState(state => state.catalog.filter);
-        const response = await ProductsService.getProducts();
+        const filter = getState().catalog.filter;
+        const sort = getState().catalog.sort;
+        const response = await ProductsService.getProducts(filter, sort);
         return response.data?response.data:[];
     }
 )
@@ -64,9 +65,13 @@ export const catalogSlice = createSlice({
         // },
         ],
         filter: {
+            usingCategories: false,
             categories: [],
-            name: null,
+            usingName: false,
+            nameIncludes: false,
+            usingMinPrice: false,
             minPrice: null,
+            usingMaxPrice: false,
             maxPrice: null
         }, //filtering mechanism yet to be determined
         sort: "AZ", //sorting mechanism yet to be determined
@@ -82,11 +87,15 @@ export const catalogSlice = createSlice({
         },
         resetFilterAndSort(state) {
            state.filter = {
+                usingCategories: false,
                 categories: [],
-                name: null,
+                usingName: false,
+                nameIncludes: false,
+                usingMinPrice: false,
                 minPrice: null,
+                usingMaxPrice: false,
                 maxPrice: null
-           };
+            };
            state.sort = "AZ";
            state.page = 1;
            state.loaded = false;

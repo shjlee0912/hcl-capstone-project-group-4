@@ -26,7 +26,9 @@ function productReducer(products = initialState, action) {
                 }
             });
         case DELETE_PRODUCT:
-            return products.filter(({id}) => id !=== payload.id);
+            return products.filter(({id}) => id !== payload.id);
+        default:
+            return initialState;
     }
 };
 

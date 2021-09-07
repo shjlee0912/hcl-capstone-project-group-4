@@ -40,7 +40,7 @@ export const FilterForm = () => {
                                     return;
                                 const newCategories = currentFilter.categories.map(c => c);
                                 newCategories.push(e.target.value)
-                                dispatch(filter({...currentFilter, categories: newCategories }));
+                                dispatch(filter({...currentFilter, usingCategories: newCategories.length>0, categories: newCategories }));
                             }}>
                                 <option value="">categories...</option>
                                 {categories.filter(cat => !currentFilter.categories.includes(cat)).sort().map( cat => (<>
@@ -56,7 +56,7 @@ export const FilterForm = () => {
                                     <CloseButton onClick={
                                         () => {
                                             let newCategories = currentFilter.categories.filter( c => c!==cat);
-                                            dispatch(filter({...currentFilter, categories: newCategories}));
+                                            dispatch(filter({...currentFilter, usingCategories: newCategories.length>0, categories: newCategories}));
                                         }
                                     }/>
                                 </div>
@@ -66,17 +66,19 @@ export const FilterForm = () => {
                         <Col xs={12} md={6} className="mb-2">
                             <InputGroup>
                                 <InputGroup.Text>name</InputGroup.Text>
-                                <FormControl data-testid="name" type="text" value={currentFilter.name||""} onChange={ e => dispatch(filter({...currentFilter, name: e.target.value===""?null:e.target.value}))}/>
+                                <FormControl data-testid="name" type="text" value={currentFilter.nameIncludes||""} onChange={ e =>  {
+                                    dispatch(filter({...currentFilter, usingName: e.target.value.length>0, nameIncludes: e.target.value===""?null:e.target.value} 
+                                ))} }/>
                             </InputGroup>
                         </Col>
                         <Col xs={12} md={6} className="mb-2">
                             <InputGroup className="mb-1">
                                 <InputGroup.Text>min price: $</InputGroup.Text>
-                                <FormControl data-testid="min-price" type="text" pattern={pricePattern} value={currentFilter.minPrice||""} onChange={ e => dispatch(filter({...currentFilter, minPrice: e.target.value===""?null:Number(e.target.value)}))}/>
+                                <FormControl data-testid="min-price" type="text" pattern={pricePattern} value={currentFilter.minPrice||""} onChange={ e => dispatch(filter({...currentFilter, usingMinPrice: e.target.value.length>0, minPrice: e.target.value===""?null:Number(e.target.value)}))}/>
                             </InputGroup>
                             <InputGroup>
                                 <InputGroup.Text>max price: $</InputGroup.Text>
-                                <FormControl data-testid="max-price" type="text" pattern={pricePattern} value={currentFilter.maxPrice||""} onChange={ e => dispatch(filter({...currentFilter, maxPrice: e.target.value===""?null:Number(e.target.value)}))}/>
+                                <FormControl data-testid="max-price" type="text" pattern={pricePattern} value={currentFilter.maxPrice||""} onChange={ e => dispatch(filter({...currentFilter, usingMaxPrice: e.target.value.length>0, maxPrice: e.target.value===""?null:Number(e.target.value)}))}/>
                             </InputGroup>
                         </Col>
                         <Col xs={6} md={3} className="mb-2"></Col>

@@ -1,17 +1,17 @@
 package com.hcl.groupfour.service;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.imageio.ImageIO;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
@@ -23,7 +23,6 @@ import com.hcl.groupfour.model.Product;
 import com.hcl.groupfour.repository.CategoryRepository;
 import com.hcl.groupfour.repository.ProductFilterObject;
 import com.hcl.groupfour.repository.ProductRepository;
-import com.hcl.groupfour.repository.ProductSortObject;
 
 @Service
 public class ProductService {
@@ -37,13 +36,19 @@ public class ProductService {
 		return pr.findAll();
 	}
 	
-	public List<Product> listFiltered(ProductFilterObject filter, ProductSortObject sort){
-		return pr.getFilteredProducts(filter, sort);
+	public List<Product> listFiltered(ProductFilterObject filter, String sort){
+		List<Product> filtered = pr.getFilteredProducts(filter, sort);
+		if(filter.isUsingCategories()) {
+			Set<String> chosen = new HashSet<>(Arrays.asList(filter.getCategories()));
+			filtered = filtered.stream().filter( (product) -> {
+				Set<String> intersection = product.getCategories().stream().map( cat -> cat.getName()).collect(Collectors.toSet());
+				intersection.retainAll(chosen);
+				return intersection.size()>0;
+			}).collect(Collectors.toList());
+		}
+		return filtered;
 	}
-	
-	public List<Product> getAllProductsContainingName(String name){
-		return pr.findByNameContaining(name);
-	}
+
 	
 	public Product saveProduct(Product prd, MultipartFile file) throws IOException, SerialException, SQLException {
 		if(!file.isEmpty()) {
@@ -88,18 +93,5 @@ public class ProductService {
 		pr.deleteById(id);
 	}
 	
-	public List<Product> sortProductByPrice(boolean ascending){
-		if(ascending) {
-			return pr.findByOrderByPrice();
-		} else {
-			return pr.findByOrderByPriceDesc();
-		}
-	}
-	
-
-	
-	public List<Product> filterProductByPriceBetween(float price1, float price2){
-		return pr.findByPriceBetween(price1, price2);
-	}
 
 }

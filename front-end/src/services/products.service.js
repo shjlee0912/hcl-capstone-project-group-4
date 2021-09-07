@@ -1,29 +1,27 @@
-// import axios from 'axios';
-// import {url} from '../config/config.js';
+import axios from 'axios';
+import {url} from '../config/config.js';
 
-// class ProductService {
-//     getProducts(filter) {
-//         return axios.get(url+"/products");
-//     }
-
-//     getCategories() {
-//         return axios.get(url+"/categories");
-//     }
-// }
-
-import http from "../http-common";
-class ProductService{
-    getFiltered(filter){
-        return http.get("/products");
+class ProductService {
+    getProducts(filter, sort) {
+        return axios.post(url+"/products_sorted?sort="+sort, filter);
     }
+
+    getCategories() {
+        return axios.get(url+"/categories");
+    }
+
     create(data){
-        return http.post("/products", data);
+        return axios.post("/products", data);
     }
+
     update(id, data){
-        return http.put(`/products/${id}`, data);
+        return axios.put(`/products/${id}`, data);
     }
+
     delete(id){
-        return http.delete(`/products/${id}`);
+        return axios.delete(`/products/${id}`);
     }
 }
+
+
 export default new ProductService();

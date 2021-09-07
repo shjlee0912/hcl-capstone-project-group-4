@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import Form from 'react-bootstrap/Form';
+import { Form, Button } from 'react-bootstrap';
 
 export const NewProductForm = () => {
     return (
