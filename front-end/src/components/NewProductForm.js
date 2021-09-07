@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
+import ProductsService from '../services/products.service';
 
 export const NewProductForm = (props) => {
     return (

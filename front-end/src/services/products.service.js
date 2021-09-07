@@ -10,7 +10,7 @@ class ProductService {
         return axios.get(url+"/categories");
     }
 
-    create(data){
+    create(name, brand, inventory, price, image, description){
         return axios.post("/products", data);
     }
 
