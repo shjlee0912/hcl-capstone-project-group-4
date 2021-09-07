@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Topbar from '../components/Topbar';
-import HomeHero from '../components/HomeHero';
+import HeroHome from '../components/HeroHome';
 
 
 function Home() {
@@ -15,7 +15,7 @@ function Home() {
       <main className="flex-grow">
 
         {/*  Page sections */}
-        <HomeHero />
+        <HeroHome />
 
       </main>
 
