@@ -1,7 +1,7 @@
 import React from 'react';
 
-import TopBar from '../components/TopBar';
-import homepage from '../components/homepage';
+import Topbar from '../components/Topbar';
+import HomeHero from '../components/HomeHero';
 
 
 function Home() {
@@ -9,13 +9,13 @@ function Home() {
     <div className="flex flex-col min-h-screen overflow-hidden">
 
       {/*  Site header */}
-      <TopBar />
+      <Topbar />
 
       {/*  Page content */}
       <main className="flex-grow">
 
         {/*  Page sections */}
-        <homepage />
+        <HomeHero />
 
       </main>
 
