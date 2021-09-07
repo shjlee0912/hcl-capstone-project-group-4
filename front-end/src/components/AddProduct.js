@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import productsService from "../services/products.service";
 import { NewProductForm } from "./NewProductForm";
 
 class AddProduct extends Component {
@@ -62,8 +63,7 @@ class AddProduct extends Component {
 
     saveProduct() {
         const { name, brand, inventory, price, image, description } = this.state;
-        this.props
-            .createProduct(name, brand, inventory, price, image, description)
+        productsService.create(name, brand, inventory, price, image, description)
             .then((data) => {
                 this.setState({
                     id: data.id,
@@ -94,26 +94,27 @@ class AddProduct extends Component {
         });
     }
 
-    render(){
-        return(
-            <div className = "submit-form">
+    render() {
+        return (
+            <div className="submit-form">
                 {this.state.submitted ? (
                     <div>
                         <h4>You submitted successfully</h4>
-                        <button className = "btn btn-success" onClick={this.newProduct}>Add</button>
+                        <button className="btn btn-success" onClick={this.newProduct}>Add</button>
                     </div>
                 ) : (
                     <NewProductForm name={this.state.name} changeName={this.onChangeName}
-                                    brand={this.state.brand} changeBrand={this.onChangeBrand}
-                                    inventory={this.state.inventory} changeInventory={this.onChangeInventory}
-                                    price={this.state.price} changePrice={this.onChangePrice}
-                                    image={this.state.image} changeImage={this.onChangeImage}
-                                    description={this.state.description} changeDescription={this.onChangeDescription}
-                                    saveProduct={this.saveProduct}/>
+                        brand={this.state.brand} changeBrand={this.onChangeBrand}
+                        inventory={this.state.inventory} changeInventory={this.onChangeInventory}
+                        price={this.state.price} changePrice={this.onChangePrice}
+                        image={this.state.image} changeImage={this.onChangeImage}
+                        description={this.state.description} changeDescription={this.onChangeDescription}
+                        saveProduct={this.saveProduct} />
                 )}
             </div>
         );
     }
 }
 
-export default connect(null, {})(AddProduct);
+// export default connect(null, {})(AddProduct);
+export default AddProduct;

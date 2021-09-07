@@ -12,6 +12,10 @@ export const getProducts = createAsyncThunk (
     }
 )
 
+// export const createProduct = createAsyncThunk(
+//     'products/'
+// )
+
 export const getCategories = createAsyncThunk (
     'products.getCategories',
     async() => {
@@ -19,6 +23,7 @@ export const getCategories = createAsyncThunk (
         return response.data?response.data:[];
     }
 )
+
 
 export const catalogSlice = createSlice({
 
