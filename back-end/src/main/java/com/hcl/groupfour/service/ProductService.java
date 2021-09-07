@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.hcl.groupfour.model.Product;
 import com.hcl.groupfour.repository.CategoryRepository;
+import com.hcl.groupfour.repository.ProductFilterObject;
 import com.hcl.groupfour.repository.ProductRepository;
+import com.hcl.groupfour.repository.ProductSortObject;
 
 @Service
 public class ProductService {
@@ -21,6 +23,10 @@ public class ProductService {
 	
 	public List<Product> listAll(){
 		return pr.findAll();
+	}
+	
+	public List<Product> listFiltered(ProductFilterObject filter, ProductSortObject sort){
+		return pr.getFilteredProducts(filter, sort);
 	}
 	
 	public List<Product> getAllProductsContainingName(String name){
