@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createProduct } from "../actions/products";
+import NewProductForm from "./NewProductForm";
 
 class AddProduct extends Component {
     constructor(props) {
@@ -103,7 +104,7 @@ class AddProduct extends Component {
                         <button className = "btn btn-success" onClick={this.newProduct}>Add</button>
                     </div>
                 ) : (
-                    
+                    <NewProductForm/>
                 )}
             </div>
         );

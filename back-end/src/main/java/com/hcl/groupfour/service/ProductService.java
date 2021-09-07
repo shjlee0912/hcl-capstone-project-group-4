@@ -1,11 +1,23 @@
 package com.hcl.groupfour.service;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hcl.groupfour.model.Product;
 import com.hcl.groupfour.repository.CategoryRepository;
@@ -33,11 +45,20 @@ public class ProductService {
 		return pr.findByNameContaining(name);
 	}
 	
-	public Product saveProduct(Product prd) {
+	public Product saveProduct(Product prd, MultipartFile file) throws IOException, SerialException, SQLException {
+		if(!file.isEmpty()) {
+			Blob blob = new SerialBlob(file.getBytes());
+			prd.setImage(blob);
+		} else {
+			File imageFile = new File("default.png");
+			byte[] fileContent = Files.readAllBytes(imageFile.toPath());
+			Blob blob = new SerialBlob(fileContent);
+			prd.setImage(blob);
+		}
 		return pr.save(prd);
 	}
 	
-	public Product editProduct(Long id, Product prd) {
+	public Product editProduct(Long id, Product prd, MultipartFile file) throws IOException, SerialException, SQLException {
 		Optional<Product> productData = pr.findById(id);
 		if(productData.isPresent()) {
 			Product p = productData.get();
@@ -45,7 +66,10 @@ public class ProductService {
 			p.setBrand(prd.getBrand());
 			p.setInventory(prd.getInventory());
 			p.setPrice(prd.getPrice());
-			p.setImage(prd.getImage());
+			if(!file.isEmpty()) {
+				Blob blob = new SerialBlob(file.getBytes());
+				p.setImage(blob);
+			}
 			p.setDescription(prd.getDescription());
 			return pr.save(p);
 		}

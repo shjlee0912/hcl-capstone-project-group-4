@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { BrowseProducts } from './BrowseProducts';
-import store from '../redux/store';
+import store from '../redux';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { server } from '../mocks/server';
