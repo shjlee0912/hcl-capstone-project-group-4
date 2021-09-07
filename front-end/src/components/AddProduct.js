@@ -103,7 +103,13 @@ class AddProduct extends Component {
                         <button className = "btn btn-success" onClick={this.newProduct}>Add</button>
                     </div>
                 ) : (
-                    <NewProductForm/>
+                    <NewProductForm name={this.state.name} changeName={this.onChangeName}
+                                    brand={this.state.brand} changeBrand={this.onChangeBrand}
+                                    inventory={this.state.inventory} changeInventory={this.onChangeInventory}
+                                    price={this.state.price} changePrice={this.onChangePrice}
+                                    image={this.state.image} changeImage={this.onChangeImage}
+                                    description={this.state.description} changeDescription={this.onChangeDescription}
+                                    saveProduct={this.saveProduct}/>
                 )}
             </div>
         );

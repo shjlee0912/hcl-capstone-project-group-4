@@ -45,7 +45,7 @@ function App() {
           </Route>
           <Route path="/admin">
             <AddProduct/>
-            all admin routes can be nested here
+            
           </Route>
         </Switch>
       </Router>
