@@ -17,8 +17,8 @@ import lombok.Data;
 @Table(name="orders")
 public class Order {
 
-	enum OrderStatus {
-		ORDER_REPLACED,
+	public enum OrderStatus {
+		ORDER_PLACED,
 		ORDER_SHIPPED,
 		ORDER_COMPLETED
 	}
@@ -32,9 +32,6 @@ public class Order {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Address shippingAddrId;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	private PaymentMethod paymentMethod;
 	
 	private Date timeOfOrder;
 	

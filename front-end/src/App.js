@@ -5,6 +5,7 @@ import { Topbar } from './components/Topbar';
 import { BrowseProducts } from './pages/BrowseProducts';
 import { ViewCart } from './pages/ViewCart';
 import { getUserInfo, logout } from './redux/authSlice'
+import { Checkout } from './pages/Checkout';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -41,7 +42,7 @@ function App() {
             <ViewCart/>
           </Route>
           <Route path="/checkout">
-            checkout form could go here
+            <Checkout/>
           </Route>
           <Route path="/admin">
             <AddProduct/>

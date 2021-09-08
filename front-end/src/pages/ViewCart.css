@@ -36,6 +36,10 @@
 
 }
 
+.product-image {
+    object-fit: contain;
+}
+
 @media only screen and (max-width: 576px) {
     .product-image {
         height: 40px;
