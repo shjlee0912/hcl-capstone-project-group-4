@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import ProductsService from '../services/products.service';
 import { url } from '../config/config';
+import { AiOutlineReload } from 'react-icons/ai';
 
 
 export const getProducts = createAsyncThunk (
@@ -12,10 +13,6 @@ export const getProducts = createAsyncThunk (
         return response.data?response.data:[];
     }
 )
-
-// export const createProduct = createAsyncThunk(
-//     'products/'
-// )
 
 export const getCategories = createAsyncThunk (
     'products.getCategories',
@@ -83,13 +80,13 @@ export const catalogSlice = createSlice({
         sort: "AZ", //sorting mechanism yet to be determined
                     //possible AZ, ZA, PRICE_ASC, PRICE_DESC
         categories: ["categoryA", "catB", 'a',"C"],
-        page: 1
+        page: 1,
     },
     reducers: {
         //updates the filter and marks the products as not loaded
         filter(state, action) {
             state.filter = action.payload;
-            state.loaded = false;
+            //state.loaded = false;
         },
         resetFilterAndSort(state) {
            state.filter = {
@@ -104,7 +101,7 @@ export const catalogSlice = createSlice({
             };
            state.sort = "AZ";
            state.page = 1;
-           state.loaded = false;
+           //state.loaded = false;
         },
         sort(state, action) {
             state.sort = action.payload;
@@ -118,6 +115,9 @@ export const catalogSlice = createSlice({
         },
         decrementPage(state) {
             state.page = state.page-1;
+        },
+        reload(state) {
+            state.loaded = false;
         }
     },
     extraReducers: (builder) => {
@@ -141,6 +141,6 @@ export const catalogSlice = createSlice({
     }
 });
 
-export const { filter, resetFilterAndSort, sort, setPage, incrementPage, decrementPage } = catalogSlice.actions;
+export const { filter, resetFilterAndSort, sort, setPage, incrementPage, decrementPage, reload } = catalogSlice.actions;
 
 export default catalogSlice.reducer;

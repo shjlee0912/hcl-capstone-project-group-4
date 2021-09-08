@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { filter, resetFilterAndSort, sort } from '../redux/catalogSlice';
+import { filter, resetFilterAndSort, sort, reload } from '../redux/catalogSlice';
 import Accordion from 'react-bootstrap/Accordion';
 import CloseButton from 'react-bootstrap/CloseButton';
 import Container from 'react-bootstrap/Container';
@@ -11,6 +11,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
+import { current } from '@reduxjs/toolkit';
 
 
 export const FilterForm = () => {
@@ -19,7 +20,27 @@ export const FilterForm = () => {
     let categories = useSelector(state => state.catalog.categories);
     const currentFilter = useSelector(state => state.catalog.filter);
     const currentSort = useSelector(state => state.catalog.sort);
-    const pricePattern = "^(?:[0-9]+.?[0-9]{0,2}|[0-9]*.?[0-9]{1,2})$"
+    const pricePattern = "^(?:[0-9]+.?[0-9]{0,2}|[0-9]*.?[0-9]{1,2})$";
+    let [oldFilter, setOldFilter] = useState(currentFilter);
+    let [oldSort, setOldSort] = useState(currentSort);
+    const sortChanged = () => {
+        return oldSort!==currentSort || oldFilter.minPrice!==currentFilter.minPrice 
+            || oldFilter.minPrice!==currentFilter.minPrice || oldFilter.nameIncludes!==currentFilter.nameIncludes
+            || oldFilter.categories.filter(cat => !currentFilter.categories.includes(cat)).length>0
+            || currentFilter.categories.filter(cat => !oldFilter.categories.includes(cat)).length>0;
+    }
+    useEffect( () => {
+        const refresh = setInterval(() => {
+            if(sortChanged()) {
+                setOldFilter({...currentFilter});
+                setOldSort(currentSort);
+                dispatch(reload());
+                console.log("reloaded")
+            }
+        }, 750)
+        return () => clearInterval(refresh);
+    });
+
     return (<Container className=" mt-4">
         <Accordion >
             <Accordion.Item eventKey="0">
