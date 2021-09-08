@@ -62,7 +62,7 @@ public class ProductService {
 
 	public void saveImage(Long id, MultipartFile file) throws IOException, SerialException, SQLException {
 		Product prd = pr.findById(id).get();
-		if(!file.isEmpty()) {
+		if(!(file==null) && !file.isEmpty()) {
 			Blob blob = new SerialBlob(file.getBytes());
 			prd.setImage(blob);
 		} else {

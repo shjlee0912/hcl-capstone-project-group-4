@@ -43,8 +43,6 @@ public class ProductController {
 	
 	@PostMapping("/products_sorted")
 	public ResponseEntity<List<Product>> getFilteredProducts(@RequestBody ProductFilterObject obj, @RequestParam(required=false) String sort){
-		System.out.println(obj);
-		System.out.println(sort);
 		try {
 			List<Product> products = new ArrayList<Product>();
 			if(obj != null) {
@@ -60,7 +58,6 @@ public class ProductController {
 	
 	@GetMapping(value = "/image/{id}", produces=MediaType.IMAGE_JPEG_VALUE)
 	public byte[] getImage(@PathVariable long id) throws SQLException {
-		System.out.println(id);
 		return ps.getImage(id);
 	}
 	
@@ -92,7 +89,7 @@ public class ProductController {
 	
 	
 	@PostMapping("/products_image/{id}")
-	public ResponseEntity<HttpStatus> saveImage(@PathVariable("id") Long id, @RequestParam("image") MultipartFile multipartFile) throws IOException{
+	public ResponseEntity<HttpStatus> saveImage(@PathVariable("id") Long id, @RequestParam(value="image", required = false) MultipartFile multipartFile) throws IOException{
 		try {
 			ps.saveImage(id, multipartFile);
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);

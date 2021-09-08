@@ -17,8 +17,8 @@ import lombok.Data;
 @Table(name="orders")
 public class Order {
 
-	enum OrderStatus {
-		ORDER_REPLACED,
+	public enum OrderStatus {
+		ORDER_PLACED,
 		ORDER_SHIPPED,
 		ORDER_COMPLETED
 	}

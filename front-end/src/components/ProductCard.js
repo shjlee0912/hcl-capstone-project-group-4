@@ -8,7 +8,6 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 
 export const ProductCard = ({product}) => {
-    console.log(product.image)
     const loggedIn = useSelector(state => state.auth.loggedIn);
     const cartIds = useSelector(state => state.cart.items.map(item => item.product.id));
 
