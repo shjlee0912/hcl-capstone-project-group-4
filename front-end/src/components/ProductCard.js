@@ -8,7 +8,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 
 export const ProductCard = ({product}) => {
-
+    console.log(product.image)
     const loggedIn = useSelector(state => state.auth.loggedIn);
     const cartIds = useSelector(state => state.cart.items.map(item => item.product.id));
 
@@ -27,8 +27,7 @@ export const ProductCard = ({product}) => {
     return(<>
         <Card as="div" bsPrefix="card">
             <span className="card-image">
-                {/* <Card.Img src={URL.createObjectURL(product.image)} alt={`image of ${product.name}`}/> */}
-                <Card.Img alt={`image of ${product.name}`}/>
+                <Card.Img src={product.image} alt={`image of ${product.name}`}/>
             </span>
             <Card.Body as="div" bsPrefix="card-body">
                 <Card.Title>{product.name}</Card.Title>

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import ProductsService from '../services/products.service';
+import { url } from '../config/config';
 
 
 export const getProducts = createAsyncThunk (
@@ -125,6 +126,9 @@ export const catalogSlice = createSlice({
         });
         builder.addCase(getProducts.fulfilled, (state, action) => {
             state.products = action.payload;
+            state.products.forEach(prod => {
+                prod.image = `${url}/image/${prod.id}`;
+            }); 
             state.loaded = true;
         });
         builder.addCase(getProducts.rejected, (state, action) => {

@@ -48,7 +48,12 @@ public class ProductService {
 		}
 		return filtered;
 	}
-
+	
+	public byte[] getImage(long id) throws SQLException {
+		Product prd = pr.findById(id).get();
+		Blob image = prd.getImage();
+		return image.getBytes(1, (int) image.length());
+	}
 	
 	public Product saveProduct(Product prd)  {
 		return pr.save(prd);

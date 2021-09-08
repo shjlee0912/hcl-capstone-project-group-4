@@ -9,6 +9,7 @@ import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,6 +58,12 @@ public class ProductController {
 		}
 	}
 	
+	@GetMapping(value = "/image/{id}", produces=MediaType.IMAGE_JPEG_VALUE)
+	public byte[] getImage(@PathVariable long id) throws SQLException {
+		System.out.println(id);
+		return ps.getImage(id);
+	}
+	
 	@GetMapping("/categories")
 	public ResponseEntity<List<String>> getAllCategoryNames() {
 		return ResponseEntity.ok(ps.getAllProductCategoryNames());
@@ -83,15 +90,6 @@ public class ProductController {
 		}
 	}
 	
-//	@PostMapping("/products")
-//	public ResponseEntity<Product> createProduct(@RequestBody Product product, @RequestParam("image") MultipartFile multipartFile){
-//		try {
-//			Product prd = ps.saveProduct(product, multipartFile);
-//			return new ResponseEntity<>(prd, HttpStatus.CREATED);
-//		} catch (Exception e) {
-//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
 	
 	@PostMapping("/products_image/{id}")
 	public ResponseEntity<HttpStatus> saveImage(@PathVariable("id") Long id, @RequestParam("image") MultipartFile multipartFile) throws IOException{

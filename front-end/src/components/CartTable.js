@@ -28,7 +28,7 @@ export const CartTable = () => {
             <tbody className="cart-table-body">
                 {items.map( ({product, quantity}) => {
                     return (<tr key={product.id}>
-                        <td><Image src={URL.createObjectURL(product.image)} alt={"image of "+product.name}roundedCircle className="product-image"/></td>
+                        <td><Image src={product.image} alt={"image of "+product.name}roundedCircle className="product-image"/></td>
                         <td>{product.name}</td>
                         <td className="description"><p>{ellipsis(product.description, 40)}</p></td>
                         <td>{priceFormatter.format(product.price)}</td>
