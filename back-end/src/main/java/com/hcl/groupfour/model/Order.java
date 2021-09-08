@@ -33,9 +33,6 @@ public class Order {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Address shippingAddrId;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	private PaymentMethod paymentMethod;
-	
 	private Date timeOfOrder;
 	
 	private OrderStatus orderStatus;
