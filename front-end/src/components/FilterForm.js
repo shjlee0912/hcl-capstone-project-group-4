@@ -25,7 +25,7 @@ export const FilterForm = () => {
     let [oldSort, setOldSort] = useState(currentSort);
     const sortChanged = () => {
         return oldSort!==currentSort || oldFilter.minPrice!==currentFilter.minPrice 
-            || oldFilter.minPrice!==currentFilter.minPrice || oldFilter.nameIncludes!==currentFilter.nameIncludes
+            || oldFilter.maxPrice!==currentFilter.maxPrice || oldFilter.nameIncludes!==currentFilter.nameIncludes
             || oldFilter.categories.filter(cat => !currentFilter.categories.includes(cat)).length>0
             || currentFilter.categories.filter(cat => !oldFilter.categories.includes(cat)).length>0;
     }
