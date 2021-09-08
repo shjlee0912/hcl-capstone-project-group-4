@@ -73,24 +73,25 @@ public class ProductController {
 	}
 	
 	
-//	@PostMapping("/products")
-//	public ResponseEntity<Product> createProduct(@RequestBody Product product){
-//		try {
-//			Product prd = ps.saveProduct(product);
-//			return new ResponseEntity<>(prd, HttpStatus.CREATED);
-//		} catch (Exception e) {
-//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
 	@PostMapping("/products")
-	public ResponseEntity<Product> createProduct(@RequestBody Product product, @RequestParam("image") MultipartFile multipartFile){
+	public ResponseEntity<Product> createProduct(@RequestBody Product product){
 		try {
-			Product prd = ps.saveProduct(product, multipartFile);
+			Product prd = ps.saveProduct(product);
 			return new ResponseEntity<>(prd, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+//	@PostMapping("/products")
+//	public ResponseEntity<Product> createProduct(@RequestBody Product product, @RequestParam("image") MultipartFile multipartFile){
+//		try {
+//			Product prd = ps.saveProduct(product, multipartFile);
+//			return new ResponseEntity<>(prd, HttpStatus.CREATED);
+//		} catch (Exception e) {
+//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//	}
 	
 	@PostMapping("/products_image/{id}")
 	public ResponseEntity<HttpStatus> saveImage(@PathVariable("id") Long id, @RequestParam("image") MultipartFile multipartFile) throws IOException{

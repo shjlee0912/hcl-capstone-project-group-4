@@ -56,8 +56,7 @@ class AddProduct extends Component {
             image: e.target.value,
             file: e.target.files[0]
         });
-        console.log(e.target.value);
-        console.log(e.target.files[0]);
+
         // const formData = new FormData();
         // formData.append('file',this.state.image);
         // productsService.addImage(this.state.id, formData)
@@ -77,10 +76,7 @@ class AddProduct extends Component {
     saveProduct(e) {
         e.preventDefault();
         const { name, brand, inventory, price, image, description } = this.state;
-        //let product_id = -1;
-        const formData = new FormData();
-        formData.append('file', this.state.file);
-        productsService.create({name, brand, inventory, price, description},formData)
+        productsService.create({name, brand, inventory, price, description})
             .then((res) => {
                 let data = res.data;
                 this.setState({
@@ -93,13 +89,10 @@ class AddProduct extends Component {
                     description: data.description,
                     submitted: true,
                 });
-                console.log(this.state.image);
-                console.log(image);
+                productsService.addImage(this.state.id, this.state.file);
             }).catch((e) => {
                 console.log(e);
             });
-        console.log(this.state.id);
-        //productsService.addImage(this.state.id, image);
     }
 
     newProduct() {

@@ -11,19 +11,21 @@ class ProductService {
     }
 
     create(data){
-        return axios.post(url+"/products", data, image, {withCredentials: true, headers: {Authorization: "Bearer "+localStorage.getItem("jwt")}});
+        return axios.post(url+"/products", data, {withCredentials: true, headers: {Authorization: "Bearer "+localStorage.getItem("jwt")}});
     }
 
     addImage(id, image){
-        return axios.post(url+`/product_image/${id}`,image, {withCredentials: true, headers: {Authorization: "Bearer "+localStorage.getItem("jwt")}});
+        const data = new FormData();
+        data.append("image", image);
+        return axios.post(url+`/products_image/${id}`, data, {withCredentials: true, headers: {Authorization: "Bearer "+localStorage.getItem("jwt")}});
     }
 
     update(id, data){
-        return axios.put(`/products/${id}`, data);
+        return axios.put(url+`/products/${id}`, data);
     }
 
     delete(id){
-        return axios.delete(`/products/${id}`);
+        return axios.delete(url+`/products/${id}`);
     }
 }
 
