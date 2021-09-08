@@ -27,7 +27,7 @@ export const ProductCard = ({product}) => {
     return(<>
         <Card as="div" bsPrefix="card">
             <span className="card-image">
-                <Card.Img src={product.image} alt={`image of ${product.name}`}/>
+                <Card.Img src={product.image} width="50" height="50" alt={`image of ${product.name}`}/>
             </span>
             <Card.Body as="div" bsPrefix="card-body">
                 <Card.Title>{product.name}</Card.Title>
