@@ -50,7 +50,10 @@ public class ProductService {
 	}
 
 	
-	public Product saveProduct(Product prd, MultipartFile file) throws IOException, SerialException, SQLException {
+//	public Product saveProduct(Product prd)  {
+//		return pr.save(prd);
+//	}
+	public Product saveProduct(Product prd, MultipartFile file) throws IOException, SerialException, SQLException{
 		if(!file.isEmpty()) {
 			Blob blob = new SerialBlob(file.getBytes());
 			prd.setImage(blob);
@@ -61,6 +64,18 @@ public class ProductService {
 			prd.setImage(blob);
 		}
 		return pr.save(prd);
+	}
+	public void saveImage(Long id, MultipartFile file) throws IOException, SerialException, SQLException {
+		Product prd = pr.findById(id).get();
+		if(!file.isEmpty()) {
+			Blob blob = new SerialBlob(file.getBytes());
+			prd.setImage(blob);
+		} else {
+			File imageFile = new File("default.png");
+			byte[] fileContent = Files.readAllBytes(imageFile.toPath());
+			Blob blob = new SerialBlob(fileContent);
+			prd.setImage(blob);
+		}
 	}
 	
 	public Product editProduct(Long id, Product prd, MultipartFile file) throws IOException, SerialException, SQLException {

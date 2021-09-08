@@ -12,7 +12,8 @@ class AddProduct extends Component {
         this.onChangePrice = this.onChangePrice.bind(this);
         this.onChangeImage = this.onChangeImage.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
-
+        this.saveProduct = this.saveProduct.bind(this);
+        this.newProduct = this.newProduct.bind(this);
         this.state = {
             id: null,
             name: "",
@@ -50,9 +51,20 @@ class AddProduct extends Component {
     }
 
     onChangeImage(e) {
+        e.preventDefault();
         this.setState({
             image: e.target.value,
+            file: e.target.files[0]
         });
+        console.log(e.target.value);
+        console.log(e.target.files[0]);
+        // const formData = new FormData();
+        // formData.append('file',this.state.image);
+        // productsService.addImage(this.state.id, formData)
+        //     .then(res =>{
+        //         console.log(res.data);
+        //         alert("File uploaded successfully");
+        //     });
     }
 
     onChangeDescription(e) {
@@ -61,24 +73,33 @@ class AddProduct extends Component {
         });
     }
 
-    saveProduct() {
+    
+    saveProduct(e) {
+        e.preventDefault();
         const { name, brand, inventory, price, image, description } = this.state;
-        productsService.create(name, brand, inventory, price, image, description)
-            .then((data) => {
+        //let product_id = -1;
+        const formData = new FormData();
+        formData.append('file', this.state.file);
+        productsService.create({name, brand, inventory, price, description},formData)
+            .then((res) => {
+                let data = res.data;
                 this.setState({
                     id: data.id,
                     name: data.name,
                     brand: data.brand,
                     inventory: data.inventory,
                     price: data.price,
-                    image: data.image,
+                    //image: data.image,
                     description: data.description,
                     submitted: true,
                 });
-                console.log(data);
+                console.log(this.state.image);
+                console.log(image);
             }).catch((e) => {
                 console.log(e);
             });
+        console.log(this.state.id);
+        //productsService.addImage(this.state.id, image);
     }
 
     newProduct() {

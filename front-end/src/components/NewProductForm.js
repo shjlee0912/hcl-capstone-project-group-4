@@ -5,7 +5,7 @@ import ProductsService from '../services/products.service';
 export const NewProductForm = (props) => {
     return (
         <div className="new-product-form">
-            <Form>
+            <Form method="post" enctype="multipart/form-data">
                 <Form.Group className="mb-3" controlId = "productName">
                     <Form.Label>Name</Form.Label>
                     <Form.Control type="text" value={props.name} onChange={props.changeName}/>
@@ -28,7 +28,7 @@ export const NewProductForm = (props) => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formFile">
                     <Form.Label>Image File</Form.Label>
-                    <Form.Control type="file" value={props.image} onChange={props.changeImage}/>
+                    <Form.Control type="file" name="image" accept="image/png, image/jpeg" value={props.image} onChange={props.changeImage}/>
                 </Form.Group>
                 <Button variant="primary" type="submit" onClick={props.saveProduct}>
                     Submit

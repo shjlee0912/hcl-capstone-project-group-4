@@ -10,8 +10,12 @@ class ProductService {
         return axios.get(url+"/categories");
     }
 
-    create(name, brand, inventory, price, image, description){
-        return axios.post("/products", data);
+    create(data){
+        return axios.post(url+"/products", data, image, {withCredentials: true, headers: {Authorization: "Bearer "+localStorage.getItem("jwt")}});
+    }
+
+    addImage(id, image){
+        return axios.post(url+`/product_image/${id}`,image, {withCredentials: true, headers: {Authorization: "Bearer "+localStorage.getItem("jwt")}});
     }
 
     update(id, data){
