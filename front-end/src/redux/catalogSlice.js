@@ -85,7 +85,10 @@ export const catalogSlice = createSlice({
     reducers: {
         //updates the filter and marks the products as not loaded
         filter(state, action) {
-            state.filter = action.payload;
+            state.filter = { ... action.payload, 
+                minPrice: isNaN(action.payload.minPrice)?null:action.payload.minPrice,
+                maxPrice: isNaN(action.payload.maxPrice)?null:action.payload.maxPrice
+        };
             //state.loaded = false;
         },
         resetFilterAndSort(state) {

@@ -23,15 +23,22 @@ export const FilterForm = () => {
     const pricePattern = "^(?:[0-9]+.?[0-9]{0,2}|[0-9]*.?[0-9]{1,2})$";
     let [oldFilter, setOldFilter] = useState(currentFilter);
     let [oldSort, setOldSort] = useState(currentSort);
+    const equalPrices = (p1, p2) => {
+        if (isNaN(p1) && isNaN(p2))
+            return true;
+        else
+            return p1===p2
+    }
     const sortChanged = () => {
-        return oldSort!==currentSort || oldFilter.minPrice!==currentFilter.minPrice 
-            || oldFilter.maxPrice!==currentFilter.maxPrice || oldFilter.nameIncludes!==currentFilter.nameIncludes
+        return oldSort!==currentSort || !equalPrices(oldFilter.minPrice, currentFilter.minPrice)
+            || !equalPrices(oldFilter.maxPrice, currentFilter.maxPrice) || oldFilter.nameIncludes!==currentFilter.nameIncludes
             || oldFilter.categories.filter(cat => !currentFilter.categories.includes(cat)).length>0
             || currentFilter.categories.filter(cat => !oldFilter.categories.includes(cat)).length>0;
     }
     useEffect( () => {
         const refresh = setInterval(() => {
-            if(sortChanged()) {
+            if(sortChanged())
+            {
                 setOldFilter({...currentFilter});
                 setOldSort(currentSort);
                 dispatch(reload());
@@ -95,11 +102,17 @@ export const FilterForm = () => {
                         <Col xs={12} md={6} className="mb-2">
                             <InputGroup className="mb-1">
                                 <InputGroup.Text>min price: $</InputGroup.Text>
-                                <FormControl data-testid="min-price" type="text" pattern={pricePattern} value={currentFilter.minPrice||""} onChange={ e => dispatch(filter({...currentFilter, usingMinPrice: e.target.value.length>0, minPrice: e.target.value===""?null:Number(e.target.value)}))}/>
+                                <FormControl data-testid="min-price" type="text" pattern={pricePattern} value={currentFilter.minPrice||""}
+                                    onChange={ e => dispatch(filter({...currentFilter, 
+                                                usingMinPrice: (e.target.value.length>0 && e.target.value.match("^[0-9]*$"))?true:false, 
+                                                minPrice: e.target.value===""?null:Number(e.target.value)}))}/>
                             </InputGroup>
                             <InputGroup>
                                 <InputGroup.Text>max price: $</InputGroup.Text>
-                                <FormControl data-testid="max-price" type="text" pattern={pricePattern} value={currentFilter.maxPrice||""} onChange={ e => dispatch(filter({...currentFilter, usingMaxPrice: e.target.value.length>0, maxPrice: e.target.value===""?null:Number(e.target.value)}))}/>
+                                <FormControl data-testid="max-price" type="text" pattern={pricePattern} value={currentFilter.maxPrice||""}
+                                                onChange={ e => dispatch(filter({...currentFilter,
+                                                usingMaxPrice: (e.target.value.length>0 && e.target.value.match("^[0-9]*$"))?true:false, 
+                                                maxPrice: e.target.value===""?null:Number(e.target.value)}))}/>
                             </InputGroup>
                         </Col>
                         <Col xs={6} md={3} className="mb-2"></Col>
