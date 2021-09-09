@@ -10,32 +10,7 @@ export const cartSlice = createSlice({
             
             field names might still need to be updated
         */
-        items: [
-            // {
-            //     product: {
-            //         id: 1,
-            //         name: "Product",
-            //         image: "https://via.placeholder.com/500x200",
-            //         brand: "BrandName",
-            //         inventory: 40,
-            //         price: 23.75,
-            //         description: "this is a placeholder item",
-            //     },
-            //     quantity: 3,
-            // },
-            // {
-            //     product: {
-            //         id: 2,
-            //         name: "Product2",
-            //         image: "https://via.placeholder.com/200x300",
-            //         brand: "BrandName2",
-            //         inventory: 4,
-            //         price: 400.89,
-            //         description: "this is a placeholder item with a longer string to describe it",
-            //     },
-            //     quantity: 1,
-            // },
-        ]
+        items: []
     },
     reducers: {
         addToCart(state, action) {

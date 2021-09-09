@@ -35,18 +35,19 @@ export const FilterForm = () => {
             || oldFilter.categories.filter(cat => !currentFilter.categories.includes(cat)).length>0
             || currentFilter.categories.filter(cat => !oldFilter.categories.includes(cat)).length>0;
     }
+
     useEffect( () => {
         const refresh = setInterval(() => {
             if(sortChanged())
             {
-                setOldFilter({...currentFilter});
+                setOldFilter( {...currentFilter, categories: currentFilter.categories.map(b => b)});
                 setOldSort(currentSort);
                 dispatch(reload());
                 console.log("reloaded")
             }
         }, 750)
         return () => clearInterval(refresh);
-    }, []);
+    }, [currentFilter, currentSort, oldFilter, oldSort]);
 
     return (<Container className=" mt-4">
         <Accordion >

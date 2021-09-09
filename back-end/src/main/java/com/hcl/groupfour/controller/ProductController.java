@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialException;
 
@@ -63,7 +62,7 @@ public class ProductController {
 	}
 	
 	@GetMapping(value = "/image/{id}", produces=MediaType.IMAGE_JPEG_VALUE)
-	public byte[] getImage(@PathVariable long id) throws SQLException {
+	public byte[] getImage(@PathVariable long id) throws SQLException, IOException {
 		return ps.getImage(id);
 	}
 	

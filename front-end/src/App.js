@@ -40,8 +40,7 @@ function App() {
   return (<>
       {expectedLoggedIn&&!loggedIn
         ?<Alert variant="danger">
-          <Alert.Heading>Your session has expired</Alert.Heading>
-          <p>you have been logged out</p>
+          <Alert.Heading>You have been logged out</Alert.Heading>
         </Alert>
         :null
       }
@@ -71,11 +70,17 @@ function App() {
             }
           </Route>
           <Route path="/new-products">
-            <AddProduct/>
+          {user && user.roles.includes("ROLE_ADMIN")
+              ?<AddProduct/>
+              :null
+            }
           </Route>
           <Route path='/edit-products/:id' component={EditProduct}/>
           <Route path="/admin">
-            <AdminView/>
+            {user && user.roles.includes("ROLE_ADMIN")
+              ?<AdminView/>
+              :null
+            }
           </Route>
         </Switch>
       </Router>

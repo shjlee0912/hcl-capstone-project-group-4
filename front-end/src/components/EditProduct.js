@@ -118,16 +118,20 @@ class EditProduct extends Component {
         });
     }
 
-    updateProduct() {
+    updateProduct(event) {
+        event.preventDefault();
         console.log("updateProduct()");
         console.log(this.state.currentProduct.id);
         console.log(this.state.currentProduct);
-        const{name,brand,inventory,price,image,description} = this.state;
+        const{name,brand,inventory,price,image,description} = this.state.currentProduct;
+        console.log(this.state.currentProduct);
         productService.update(this.state.currentProduct.id, {name,brand,inventory,price,description})
             .then((res) => {
                 console.log(res);
-                this.setState({ submitted: true });
-                //productService.addImage(this.state.id, this.state.file);
+                if(image) {
+                    productService.addImage(res.data.id, this.state.file).then(this.setState({ submitted: true }))
+                }
+                
             })
             .catch((e) => {
                 console.log(e);

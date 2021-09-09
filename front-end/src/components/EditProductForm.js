@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 
 export const EditProductForm = (props) => {
     console.log(props.name);
-    console.log(props.image);
+    console.log(props.brand)
     return (
         <div className="edit-product-form">
             <Form enctype="multipart/form-data">

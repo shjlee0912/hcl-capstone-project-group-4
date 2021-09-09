@@ -1,6 +1,8 @@
 package com.hcl.groupfour.controller;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -73,6 +75,8 @@ public class JwtAuthenticationController {
 		user.setUsername(authUser.getUsername());
 		user.setEmail(authUser.getEmail());
 		user.setPhoneNumber(authUser.getPhoneNumber());
+		List<String> roles = authUser.getRoles().stream().map(r -> r.getType()).collect(Collectors.toList());
+		user.setRoles(roles.toArray(new String[0]));
 		return ResponseEntity.ok(user);
 	}
 	

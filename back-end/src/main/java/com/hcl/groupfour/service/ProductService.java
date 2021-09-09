@@ -16,6 +16,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,6 +42,7 @@ public class ProductService {
 //	}
 	
 	public List<Product> listFiltered(ProductFilterObject filter, String sort){
+		System.out.println("hello");
 		List<Product> filtered = pr.getFilteredProducts(filter, sort);
 		if(filter.isUsingCategories()) {
 			Set<String> chosen = new HashSet<>(Arrays.asList(filter.getCategories()));
@@ -53,10 +55,11 @@ public class ProductService {
 		return filtered;
 	}
 	
-	public byte[] getImage(long id) throws SQLException {
+	public byte[] getImage(long id) throws SQLException, IOException {
 		Product prd = pr.findById(id).get();
 		Blob image = prd.getImage();
 		return image.getBytes(1, (int) image.length());
+
 	}
 	
 	public Product saveProduct(Product prd)  {
@@ -69,8 +72,9 @@ public class ProductService {
 		if(!(file==null) && !file.isEmpty()) {
 			Blob blob = new SerialBlob(file.getBytes());
 			prd.setImage(blob);
+			pr.save(prd);
 		} else {
-			File imageFile = new File("default.png");
+			File imageFile = new ClassPathResource("static/default.png").getFile();
 			byte[] fileContent = Files.readAllBytes(imageFile.toPath());
 			Blob blob = new SerialBlob(fileContent);
 			prd.setImage(blob);
@@ -86,10 +90,6 @@ public class ProductService {
 			p.setBrand(prd.getBrand());
 			p.setInventory(prd.getInventory());
 			p.setPrice(prd.getPrice());
-//			if(!file.isEmpty()) {
-//				Blob blob = new SerialBlob(file.getBytes());
-//				p.setImage(blob);
-//			}
 			p.setDescription(prd.getDescription());
 			return pr.save(p);
 		}

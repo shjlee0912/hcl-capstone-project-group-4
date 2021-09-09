@@ -17,6 +17,8 @@ public class ClientUserDTO {
 	
 	private String email;
 	
+	private String roles[];
+	
 	private Address[] addresses;
 	
 }

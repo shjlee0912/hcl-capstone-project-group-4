@@ -1,6 +1,5 @@
 import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Badge from 'react-bootstrap/Badge';
@@ -28,8 +27,8 @@ export const Topbar = () => {
                 <Navbar.Collapse className="justify-content-between">
                     <Nav>
                         <LinkContainer className="link" to="/products"><Navbar.Text>View Products</Navbar.Text></LinkContainer>
-                        {/* TODO: Need authentication */}
-                        <LinkContainer className="link" to="/new-products"><Navbar.Text>Add New Product</Navbar.Text></LinkContainer>
+                        {user&&user.roles.includes("ROLE_ADMIN")?<LinkContainer className="link" to="/admin"><Navbar.Text>Edit Catalog</Navbar.Text></LinkContainer>:null}
+                        {user&&user.roles.includes("ROLE_ADMIN")?<LinkContainer className="link" to="/new-products"><Navbar.Text>Add New Product</Navbar.Text></LinkContainer>:null}
                     </Nav>
                     <div className="toggle-margin">
                         <Nav> 
