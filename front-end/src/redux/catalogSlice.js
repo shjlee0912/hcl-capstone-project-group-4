@@ -121,6 +121,10 @@ export const catalogSlice = createSlice({
         },
         reload(state) {
             state.loaded = false;
+        },
+        removeProduct(state,action){
+            const productId = action.payload;
+            state.products = state.products.filter(products => products.id != productId);
         }
     },
     extraReducers: (builder) => {
@@ -144,6 +148,6 @@ export const catalogSlice = createSlice({
     }
 });
 
-export const { filter, resetFilterAndSort, sort, setPage, incrementPage, decrementPage, reload } = catalogSlice.actions;
+export const { filter, resetFilterAndSort, sort, setPage, incrementPage, decrementPage, reload, removeProduct } = catalogSlice.actions;
 
 export default catalogSlice.reducer;

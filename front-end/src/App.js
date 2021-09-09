@@ -10,7 +10,9 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { Alert } from 'react-bootstrap';
-import AddProduct from './components/AddProduct'
+import { AdminView } from './pages/AdminView';
+import AddProduct from './components/AddProduct';
+import EditProduct from './components/EditProduct';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -68,14 +70,12 @@ function App() {
               :<Redirect to="/"/>
             }
           </Route>
+          <Route path="/new-products">
+            <AddProduct/>
+          </Route>
+          <Route path='/edit-products/:id' component={EditProduct}/>
           <Route path="/admin">
-            {/* {user&&user.roles.includes("ROLE_ADMIN")
-              ?<>
-                <AddProduct/>
-              </>
-              :<Redirect to="/"/>
-            } */}
-            
+            <AdminView/>
           </Route>
         </Switch>
       </Router>

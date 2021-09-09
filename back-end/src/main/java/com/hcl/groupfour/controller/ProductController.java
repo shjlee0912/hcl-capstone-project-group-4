@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialException;
 
@@ -43,6 +44,7 @@ public class ProductController {
 			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
 	
 	@PostMapping("/products_sorted")
 	public ResponseEntity<List<Product>> getFilteredProducts(@RequestBody ProductFilterObject obj, @RequestParam(required=false) String sort){
@@ -104,7 +106,7 @@ public class ProductController {
 	
 	@PutMapping("/products/{id}")
 	public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) throws SerialException, IOException, SQLException{
-		Product prd = ps.editProduct(id, product, null);
+		Product prd = ps.editProduct(id, product);
 		if(prd == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
