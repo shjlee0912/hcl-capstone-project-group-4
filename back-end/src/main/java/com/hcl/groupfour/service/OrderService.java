@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.hcl.groupfour.Exception.InsufficientInventoryException;
 import com.hcl.groupfour.dto.AddressDTO;
 import com.hcl.groupfour.dto.OrderedProductDTO;
 import com.hcl.groupfour.dto.PlaceOrderDTO;
@@ -50,7 +51,7 @@ public class OrderService {
 	}
 	
 	@Transactional
-	public Charge makePayment(PlaceOrderDTO orderDTO, String username) throws StripeException {
+	public Charge makePayment(PlaceOrderDTO orderDTO, String username) throws StripeException, InsufficientInventoryException {
 		String token = orderDTO.getToken();
 		User user = ur.findByUsername(username);
 		Address address = ar.findById(orderDTO.getAddressId()).get();
@@ -63,12 +64,17 @@ public class OrderService {
 		double total = 0;
 		for(OrderedProductDTO item: orderDTO.getItems()) {
 			Product product = pr.findById(item.getProductId()).get();
+			if(product.getInventory()<item.getQuantity()) {
+				throw new InsufficientInventoryException(String.format("attempted to order %d units of product %d when only %d were available", item.getQuantity(), product.getId(), product.getInventory()));
+			}
+			product.setInventory(product.getInventory() - item.getQuantity());
 			total += product.getPrice() * item.getQuantity();
 			OrderItem newItem = new OrderItem();
 			newItem.setProductId(pr.getById(item.getProductId()));
 			newItem.setOrderId(order.getId());
 			newItem.setQuantity(item.getQuantity());
 			oir.save(newItem);
+			pr.save(product);
 		}
 		order.setTotal(Double.parseDouble(String.format("%.2f", total)));
 		or.save(order);
