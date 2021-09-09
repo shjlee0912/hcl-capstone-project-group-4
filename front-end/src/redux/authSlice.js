@@ -31,7 +31,7 @@ export const getUserInfo = createAsyncThunk(
     async () => {
         if(localStorage.getItem("jwt")) {
             const response = await AuthService.getUserInfo();
-            return response;
+            return {status: response.status, data: response.data};
         }
     }
 )

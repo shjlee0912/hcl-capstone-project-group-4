@@ -33,7 +33,7 @@ export const Checkout = () => {
     const [disabled, setDisabled] = useState(false);
     const [paymentFailed, setPaymentFailed] = useState(false)
 
-    const [newAddr, setNewAddr] = useState(false);
+    const [newAddr, setNewAddr] = useState(user.addresses.length>0&&user.addresses[0]!=null?false:true);
     const [streetAddr, setStreetAddr] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
@@ -131,6 +131,7 @@ export const Checkout = () => {
                     className="mb-2"
                     type="switch"
                     label="use existing shipping address"
+                    disabled={user.addresses.length<1||user.addresses[0]==null}
                     checked={!newAddr}
                     onChange={() => setNewAddr(oldVal => !oldVal)}/>
                 {newAddr

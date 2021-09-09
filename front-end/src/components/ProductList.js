@@ -6,10 +6,12 @@ import { ProductCard } from "./ProductCard";
 
 export const ProductList = ({products}) => {
     return(<Container fluid>
-        <Row className="p-3" xxl={5} xl={4} md={3} sm={2} xs={1}>
-            {products.map( p => {
-                return (<Col data-testid="card-col" className="mb-4" key={p.id}><ProductCard product={p}/></Col>);
-            })}
-        </Row>
+        <div className="d-flex justify-content-center">
+            <Row className="p-3" xl={4} md={3} sm={2} xs={1}>
+                {products.map( p => {
+                    return (<Col data-testid="card-col" className="mb-4" key={p.id}><ProductCard product={p}/></Col>);
+                })}
+            </Row>
+        </div>
     </Container>);
 }

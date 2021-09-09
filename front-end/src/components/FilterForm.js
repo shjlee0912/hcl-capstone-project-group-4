@@ -46,7 +46,7 @@ export const FilterForm = () => {
             }
         }, 750)
         return () => clearInterval(refresh);
-    });
+    }, []);
 
     return (<Container className=" mt-4">
         <Accordion >
