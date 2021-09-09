@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialException;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +30,8 @@ import com.hcl.groupfour.service.ProductService;
 @RestController
 public class ProductController {
 	
+	Logger logger = org.slf4j.LoggerFactory.getLogger(ProductController.class);
+	
 	@Autowired
 	private ProductService ps;
 	
@@ -45,6 +48,7 @@ public class ProductController {
 	
 	@PostMapping("/products_sorted")
 	public ResponseEntity<List<Product>> getFilteredProducts(@RequestBody ProductFilterObject obj, @RequestParam(required=false) String sort){
+		logger.info("getting filtered products");
 		try {
 			List<Product> products = new ArrayList<Product>();
 			if(obj != null) {
