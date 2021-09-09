@@ -36,6 +36,10 @@ public class ProductService {
 		return pr.findAll();
 	}
 	
+//	public Optional<Product> findById(Long id) {
+//		return pr.findById(id);
+//	}
+	
 	public List<Product> listFiltered(ProductFilterObject filter, String sort){
 		List<Product> filtered = pr.getFilteredProducts(filter, sort);
 		if(filter.isUsingCategories()) {
@@ -74,7 +78,7 @@ public class ProductService {
 		pr.save(prd);
 	}
 	
-	public Product editProduct(Long id, Product prd, MultipartFile file) throws IOException, SerialException, SQLException {
+	public Product editProduct(Long id, Product prd) {
 		Optional<Product> productData = pr.findById(id);
 		if(productData.isPresent()) {
 			Product p = productData.get();
@@ -82,10 +86,10 @@ public class ProductService {
 			p.setBrand(prd.getBrand());
 			p.setInventory(prd.getInventory());
 			p.setPrice(prd.getPrice());
-			if(!file.isEmpty()) {
-				Blob blob = new SerialBlob(file.getBytes());
-				p.setImage(blob);
-			}
+//			if(!file.isEmpty()) {
+//				Blob blob = new SerialBlob(file.getBytes());
+//				p.setImage(blob);
+//			}
 			p.setDescription(prd.getDescription());
 			return pr.save(p);
 		}

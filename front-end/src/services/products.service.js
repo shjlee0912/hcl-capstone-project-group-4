@@ -6,6 +6,10 @@ class ProductService {
         return axios.post(url+"/products_sorted?sort="+sort, filter);
     }
 
+    getProductById(id){
+        return axios.get(url+`/products/${id}`, {withCredentials: true, headers: {Authorization: "Bearer "+localStorage.getItem("jwt")}});
+    }
+
     getCategories() {
         return axios.get(url+"/categories");
     }
@@ -21,11 +25,11 @@ class ProductService {
     }
 
     update(id, data){
-        return axios.put(url+`/products/${id}`, data);
+        return axios.put(url+`/products/${id}`, data, {withCredentials: true, headers: {Authorization: "Bearer "+localStorage.getItem("jwt")}});
     }
 
     delete(id){
-        return axios.delete(url+`/products/${id}`);
+        return axios.delete(url+`/products/${id}`, {withCredentials: true, headers: {Authorization: "Bearer "+localStorage.getItem("jwt")}});
     }
 }
 

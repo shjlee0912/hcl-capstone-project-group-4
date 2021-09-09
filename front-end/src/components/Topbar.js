@@ -28,6 +28,8 @@ export const Topbar = () => {
                 <Navbar.Collapse className="justify-content-between">
                     <Nav>
                         <LinkContainer className="link" to="/products"><Navbar.Text>View Products</Navbar.Text></LinkContainer>
+                        {/* TODO: Need authentication */}
+                        <LinkContainer className="link" to="/new-products"><Navbar.Text>Add New Product</Navbar.Text></LinkContainer>
                     </Nav>
                     <div className="toggle-margin">
                         <Nav> 

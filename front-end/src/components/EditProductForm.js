@@ -1,10 +1,12 @@
 import React,{useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
 
-export const NewProductForm = (props) => {
+export const EditProductForm = (props) => {
+    console.log(props.name);
+    console.log(props.image);
     return (
-        <div className="new-product-form">
-            <Form method="post" enctype="multipart/form-data">
+        <div className="edit-product-form">
+            <Form enctype="multipart/form-data">
                 <Form.Group className="mb-3" controlId = "productName">
                     <Form.Label>Name</Form.Label>
                     <Form.Control type="text" value={props.name} onChange={props.changeName}/>
@@ -29,7 +31,7 @@ export const NewProductForm = (props) => {
                     <Form.Label>Image File</Form.Label>
                     <Form.Control type="file" name="image" accept="image/png, image/jpeg" value={props.image} onChange={props.changeImage}/>
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={props.saveProduct}>
+                <Button variant="primary" type="submit" onClick={props.updateProduct}>
                     Submit
                 </Button>
             </Form>

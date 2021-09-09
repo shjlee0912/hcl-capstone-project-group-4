@@ -9,7 +9,9 @@ import { Checkout } from './pages/Checkout';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import AddProduct from './components/AddProduct'
+import { AdminView } from './pages/AdminView';
+import AddProduct from './components/AddProduct';
+import EditProduct from './components/EditProduct';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -44,9 +46,12 @@ function App() {
           <Route path="/checkout">
             <Checkout/>
           </Route>
-          <Route path="/admin">
+          <Route path="/new-products">
             <AddProduct/>
-            
+          </Route>
+          <Route path='/edit-products/:id' component={EditProduct}/>
+          <Route path="/admin">
+            <AdminView/>
           </Route>
         </Switch>
       </Router>
