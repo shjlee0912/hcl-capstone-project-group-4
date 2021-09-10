@@ -50,7 +50,7 @@ public class OrderService {
 		Stripe.apiKey = key;
 	}
 	
-	@Transactional
+	@Transactional(rollbackOn = {StripeException.class, InsufficientInventoryException.class})
 	public Charge makePayment(PlaceOrderDTO orderDTO, String username) throws StripeException, InsufficientInventoryException {
 		String token = orderDTO.getToken();
 		User user = ur.findByUsername(username);
@@ -70,8 +70,8 @@ public class OrderService {
 			product.setInventory(product.getInventory() - item.getQuantity());
 			total += product.getPrice() * item.getQuantity();
 			OrderItem newItem = new OrderItem();
-			newItem.setProductId(pr.getById(item.getProductId()));
-			newItem.setOrderId(order.getId());
+			newItem.setProduct(pr.getById(item.getProductId()));
+			newItem.setOrder(order);
 			newItem.setQuantity(item.getQuantity());
 			oir.save(newItem);
 			pr.save(product);

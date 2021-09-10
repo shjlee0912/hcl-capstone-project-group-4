@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class OrderItemId implements Serializable{
 
-	private long orderId;
+	private Long order;
 	
-	private long productId;
+	private Long product;
 	
 }

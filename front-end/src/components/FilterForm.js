@@ -37,7 +37,7 @@ export const FilterForm = () => {
     }
 
     useEffect( () => {
-        const refresh = setInterval(() => {
+        const refresh = setTimeout(() => {
             if(sortChanged())
             {
                 setOldFilter( {...currentFilter, categories: currentFilter.categories.map(b => b)});
@@ -46,7 +46,7 @@ export const FilterForm = () => {
                 console.log("reloaded")
             }
         }, 750)
-        return () => clearInterval(refresh);
+        return () => clearTimeout(refresh);
     }, [currentFilter, currentSort, oldFilter, oldSort]);
 
     return (<Container className=" mt-4">

@@ -14,10 +14,12 @@ import lombok.Data;
 public class OrderItem {
 	
 	@Id
-	private long orderId;
-	
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Product productId;
+	private Order order;
+	
+	@Id
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Product product;
 	
 	private int quantity;
 	

@@ -114,9 +114,15 @@ export const Checkout = () => {
             }),
         }
 
-        const response = await OrdersService.placeOrder(orderobj);
-        setDisabled(false);
-        dispatch(clearCart());
+        try {
+            const response = await OrdersService.placeOrder(orderobj);
+            setDisabled(false);
+            dispatch(clearCart());
+        } catch(err) {
+            setPaymentFailed(true);
+            setDisabled(false);
+        }
+
     }
 
     return (<>

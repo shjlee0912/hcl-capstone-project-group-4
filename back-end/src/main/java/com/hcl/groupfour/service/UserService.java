@@ -36,7 +36,7 @@ public class UserService {
 		return ur.findByUsername(username);
 	}
 	
-	@Transactional
+	@Transactional(rollbackOn = UserNameUnavailableException.class)
 	public User registerUser(UserDTO userDTO) throws UserNameUnavailableException {
 		if(ur.findByUsername(userDTO.getUsername())!=null) {
 			throw new UserNameUnavailableException();
