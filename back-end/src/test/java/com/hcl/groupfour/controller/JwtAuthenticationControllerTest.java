@@ -57,6 +57,7 @@ public class JwtAuthenticationControllerTest {
     @BeforeEach
     public void contextLoads() {
         mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         
         MockitoAnnotations.openMocks(this);
 
@@ -73,7 +74,6 @@ public class JwtAuthenticationControllerTest {
     	when(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken("username", "123"))).thenReturn(null); //just needs to not throw exception
     	when(userDetailsService.loadUserByUsername("username")).thenReturn(userDetails);
     	when(jwtTokenUtil.generateToken(userDetails)).thenReturn("valid token"); //do not actually generate the token
-    	mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
     	ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
     	String requestBody = ow.writeValueAsString(loginRequest);
         mockMvc.perform(post("/authenticate")

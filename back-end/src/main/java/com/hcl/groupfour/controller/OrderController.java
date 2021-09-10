@@ -32,8 +32,8 @@ public class OrderController {
 	}
 	
 	@PostMapping("/shipping_address") 
-	public ResponseEntity<Address> createShippingAddress(@RequestBody AddressDTO address) {
-		return ResponseEntity.ok(orderService.createAddress(address));
+	public ResponseEntity<Address> createShippingAddress(@RequestBody AddressDTO address, Principal principal) {
+		return ResponseEntity.ok(orderService.createAddress(address, principal.getName()));
 		
 	}
 	

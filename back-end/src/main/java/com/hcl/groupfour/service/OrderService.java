@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.hcl.groupfour.Exception.InsufficientInventoryException;
 import com.hcl.groupfour.dto.AddressDTO;
 import com.hcl.groupfour.dto.OrderedProductDTO;
 import com.hcl.groupfour.dto.PlaceOrderDTO;
+import com.hcl.groupfour.exception.InsufficientInventoryException;
 import com.hcl.groupfour.model.Address;
 import com.hcl.groupfour.model.Order;
 import com.hcl.groupfour.model.OrderItem;
@@ -85,9 +85,9 @@ public class OrderService {
 		return Charge.create(chargeParams);
 	}
 	
-	public Address createAddress(AddressDTO address) {
+	public Address createAddress(AddressDTO address, String username) {
 		Address newAddress = new Address();
-		User user = ur.findByUsername(address.getUsername());
+		User user = ur.findByUsername(username);
 		newAddress.setFirstName(address.getFirstName());
 		newAddress.setLastName(address.getLastName());
 		newAddress.setStreetAddr(address.getStreetAddr());

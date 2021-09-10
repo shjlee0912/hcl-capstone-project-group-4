@@ -86,13 +86,14 @@ export const Checkout = () => {
                     zipCode,
                 });
                 addressId = newAddrRes.data.id;
+                console.log(newAddrRes.data);
             } catch(err) {
                 setPaymentFailed(true);
                 setDisabled(false);
                 return;
             }
         } else {
-            addressId = userAddrId
+            addressId = userAddrId;
         }
         const cardElement = elements.getElement(CardElement)
 

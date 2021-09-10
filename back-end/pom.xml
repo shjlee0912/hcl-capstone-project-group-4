@@ -111,11 +111,18 @@
 					</execution>
 				</executions>
 				<configuration>
-					<includes>
+				<excludes>
+					<exclude>com/hcl/groupfour/CapstoneApplication.java</exclude>
+					<exclude>com/hcl/groupfour/config/*</exclude>
+					<exclude>com/hcl/groupfour/dto/*</exclude>
+					<exclude>com/hcl/groupfour/exception/*</exclude>
+					<exclude>com/hcl/groupfour/model/*</exclude>
+				</excludes>
+		   <!-- <includes>
 						<include>com/hcl/groupfour/controller/*</include>
 						<include>com/hcl/groupfour/service/*</include>
 						<include>com/hcl/groupfour/repository/*</include>
-					</includes>
+				</includes> -->
 
 				</configuration>
 			</plugin>
@@ -124,7 +131,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 
 				<configuration>
-					<redirectTestOutputToFile>true</redirectTestOutputToFile>
+					<!-- <redirectTestOutputToFile>true</redirectTestOutputToFile> -->
 					<forkCount>3</forkCount>
 					<reuseForks>true</reuseForks>
 					<argLine>${surefireArgLine}</argLine>
