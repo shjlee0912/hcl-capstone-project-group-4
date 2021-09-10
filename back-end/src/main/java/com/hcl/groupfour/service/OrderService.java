@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import com.hcl.groupfour.dto.AddressDTO;
 import com.hcl.groupfour.dto.OrderedProductDTO;
 import com.hcl.groupfour.dto.PlaceOrderDTO;
-import com.hcl.groupfour.Exception.InsufficientInventoryException;
+import com.hcl.groupfour.exception.InsufficientInventoryException;
 import com.hcl.groupfour.model.Address;
 import com.hcl.groupfour.model.Order;
 import com.hcl.groupfour.model.OrderItem;

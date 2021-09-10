@@ -1,4 +1,4 @@
-package com.hcl.groupfour.Exception;
+package com.hcl.groupfour.exception;
 
 public class InsufficientInventoryException extends Exception {
 

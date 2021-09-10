@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hcl.groupfour.config.JwtTokenUtil;
 import com.hcl.groupfour.dto.ClientUserDTO;
 import com.hcl.groupfour.dto.UserDTO;
-import com.hcl.groupfour.Exception.UserNameUnavailableException;
+import com.hcl.groupfour.exception.UserNameUnavailableException;
 import com.hcl.groupfour.model.Address;
 import com.hcl.groupfour.model.JwtRequest;
 import com.hcl.groupfour.model.JwtResponse;

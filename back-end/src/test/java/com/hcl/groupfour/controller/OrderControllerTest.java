@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.hcl.groupfour.dto.AddressDTO;
 import com.hcl.groupfour.dto.PlaceOrderDTO;
-import com.hcl.groupfour.Exception.InsufficientInventoryException;
+import com.hcl.groupfour.exception.InsufficientInventoryException;
 import com.hcl.groupfour.model.Address;
 import com.hcl.groupfour.service.OrderService;
 import com.stripe.model.Charge;
