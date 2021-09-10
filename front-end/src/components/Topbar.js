@@ -29,6 +29,7 @@ export const Topbar = () => {
                         <LinkContainer className="link" to="/products"><Navbar.Text>View Products</Navbar.Text></LinkContainer>
                         {user&&user.roles.includes("ROLE_ADMIN")?<LinkContainer className="link" to="/admin"><Navbar.Text>Edit Catalog</Navbar.Text></LinkContainer>:null}
                         {user&&user.roles.includes("ROLE_ADMIN")?<LinkContainer className="link" to="/new-products"><Navbar.Text>Add New Product</Navbar.Text></LinkContainer>:null}
+                        {/* <LinkContainer className="link" href="http://localhost:9191/swagger-ui.html"><Navbar.Text>View Swagger-UI</Navbar.Text></LinkContainer> */}
                     </Nav>
                     <div className="toggle-margin">
                         <Nav> 
