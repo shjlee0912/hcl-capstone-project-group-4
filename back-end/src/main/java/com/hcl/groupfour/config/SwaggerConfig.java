@@ -20,7 +20,7 @@ public class SwaggerConfig {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
 				.paths(PathSelectors.ant("/**"))
-				.apis(RequestHandlerSelectors.basePackage("com.hcl.groupfour"))
+				.apis(RequestHandlerSelectors.basePackage("com.hcl"))
 				.build()
 				.apiInfo(apiInfo());
 	}

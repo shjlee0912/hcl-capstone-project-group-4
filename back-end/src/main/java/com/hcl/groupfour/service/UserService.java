@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hcl.groupfour.dto.UserDTO;
-import com.hcl.groupfour.exception.UserNameUnavailableException;
+import com.hcl.groupfour.Exception.UserNameUnavailableException;
 import com.hcl.groupfour.model.Address;
 import com.hcl.groupfour.model.Role;
 import com.hcl.groupfour.model.User;
