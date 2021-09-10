@@ -1,4 +1,4 @@
-package com.hcl.groupfour.repository;
+package com.hcl.groupfour.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

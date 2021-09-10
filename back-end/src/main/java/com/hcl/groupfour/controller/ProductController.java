@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hcl.groupfour.model.Product;
-import com.hcl.groupfour.repository.ProductFilterObject;
+import com.hcl.groupfour.model.ProductFilterObject;
 import com.hcl.groupfour.service.ProductService;
 
 @RestController

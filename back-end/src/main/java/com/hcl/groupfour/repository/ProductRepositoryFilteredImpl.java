@@ -12,6 +12,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hcl.groupfour.model.Product;
+import com.hcl.groupfour.model.ProductFilterObject;
 
 public class ProductRepositoryFilteredImpl implements ProductRepositoryFiltered {
 
