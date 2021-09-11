@@ -7,7 +7,8 @@ import java.util.List;
 
 import javax.sql.rowset.serial.SerialException;
 
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +30,7 @@ import com.hcl.groupfour.service.ProductService;
 @RestController
 public class ProductController {
 	
-	Logger logger = org.slf4j.LoggerFactory.getLogger(ProductController.class);
+	private final static Logger log = LogManager.getLogger(ProductController.class);
 	
 	@Autowired
 	private ProductService ps;
@@ -38,8 +39,10 @@ public class ProductController {
 	public ResponseEntity<List<Product>> getAllProducts(){
 		try {
 			List<Product> products = new ArrayList<Product>();
+			log.info("INFO: Products successfully listed.");
 			return new ResponseEntity<>(ps.listAll(),HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("ERROR: Products failed to list. Message: " + e.getMessage());
 			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -55,8 +58,10 @@ public class ProductController {
 			} else {
 				ps.listAll().forEach(products::add);
 			}
+			log.info("INFO: Products successfully sorted.");
 			return new ResponseEntity<>(products,HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("ERROR: Products failed to sort. Message: " + e.getMessage());
 			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -86,8 +91,10 @@ public class ProductController {
 	public ResponseEntity<Product> createProduct(@RequestBody Product product){
 		try {
 			Product prd = ps.saveProduct(product);
+			log.info("INFO: Product(s) successfully saved.");
 			return new ResponseEntity<>(prd, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.error("ERROR: Product(s) failed to save. Message: " + e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -97,8 +104,10 @@ public class ProductController {
 	public ResponseEntity<HttpStatus> saveImage(@PathVariable("id") Long id, @RequestParam(value="image", required = false) MultipartFile multipartFile) throws IOException{
 		try {
 			ps.saveImage(id, multipartFile);
+			log.info("INFO: Image successfully saved.");
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 		} catch (Exception e) {
+			log.error("ERROR: Image failed to save. Message: " + e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -116,8 +125,10 @@ public class ProductController {
 	public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") Long id){
 		try {
 			ps.deleteById(id);
+			log.info("INFO: Image successfully deleted.");
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 		} catch (Exception e) {
+			log.error("ERROR: Image failed to delete, Message: " + e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
