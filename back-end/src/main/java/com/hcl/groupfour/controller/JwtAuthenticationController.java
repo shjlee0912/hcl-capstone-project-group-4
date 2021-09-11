@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,6 +34,8 @@ import com.hcl.groupfour.service.UserService;
 
 @RestController
 public class JwtAuthenticationController {
+	
+	private final static Logger log = LogManager.getLogger(JwtAuthenticationController.class);
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -61,6 +65,7 @@ public class JwtAuthenticationController {
 			final String token = jwtTokenUtil.generateToken(userDetails);
 			return ResponseEntity.ok(new JwtResponse(token));
 		} catch(UserNameUnavailableException ex) {
+			log.error("ERROR: Username unavailable. Message: " + ex.getMessage());
 			return ResponseEntity.status(409).build();
 		}
 	}
@@ -85,9 +90,12 @@ public class JwtAuthenticationController {
 	private void authenticate(String username, String password) throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+			log.info("INFO: User Authenticated");
 		} catch (DisabledException e) {
+			log.error("ERROR: User disabled. Message: " + e.getMessage());
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
+			log.error("ERROR: Bad credentials. Message: " + e.getMessage());
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
 	}
