@@ -72,11 +72,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// We don't need CSRF for this example
 		httpSecurity.cors().and().csrf().disable()
 				// dont authenticate this particular request
-				.authorizeRequests().antMatchers("/authenticate","/register", "/products_sorted", "/image/*", "/swagger-ui.html/**", "/configuration/**","/swagger-resources/**", "/v2/api-docs","/webjars/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/products", "/categories").permitAll()
-//				.antMatchers(HttpMethod.POST, "/products","/products_image/*").hasRole("ADMIN")
-//				.antMatchers(HttpMethod.PUT, "/products/*").hasRole("ADMIN")
-//				.antMatchers(HttpMethod.DELETE, "/products/*").hasRole("ADMIN")
+				.authorizeRequests().antMatchers("/authenticate","/register", "/products_sorted", "/swagger-ui.html/**", "/configuration/**","/swagger-resources/**", "/v2/api-docs","/webjars/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/products", "/categories", "/image/*").permitAll()
+				.antMatchers(HttpMethod.POST, "/products","/products_image/*").hasRole("ADMIN")
+				.antMatchers(HttpMethod.PUT, "/products/*").hasRole("ADMIN")
+				.antMatchers(HttpMethod.DELETE, "/products/*").hasRole("ADMIN")
 				// all other requests need to be authenticated
 				.anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to

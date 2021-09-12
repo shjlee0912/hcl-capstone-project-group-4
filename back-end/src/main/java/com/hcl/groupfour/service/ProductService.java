@@ -42,7 +42,6 @@ public class ProductService {
 //	}
 	
 	public List<Product> listFiltered(ProductFilterObject filter, String sort){
-		System.out.println("hello");
 		List<Product> filtered = pr.getFilteredProducts(filter, sort);
 		if(filter.isUsingCategories()) {
 			Set<String> chosen = new HashSet<>(Arrays.asList(filter.getCategories()));

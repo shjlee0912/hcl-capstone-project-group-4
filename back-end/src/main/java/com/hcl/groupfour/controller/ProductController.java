@@ -50,7 +50,7 @@ public class ProductController {
 	
 	@PostMapping("/products_sorted")
 	public ResponseEntity<List<Product>> getFilteredProducts(@RequestBody ProductFilterObject obj, @RequestParam(required=false) String sort){
-		logger.info("getting filtered products");
+		log.info("getting filtered products");
 		try {
 			List<Product> products = new ArrayList<Product>();
 			if(obj != null) {
