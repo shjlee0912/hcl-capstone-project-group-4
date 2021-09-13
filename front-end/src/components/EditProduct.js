@@ -101,12 +101,12 @@ class EditProduct extends Component {
     }
 
     onChangeImage(e) {
-        const image = e.target.value;
+        e.preventDefault();
         this.setState(function (prevState) {
             return {
                 currentProduct: {
                     ...prevState.currentProduct,
-                    image: image,
+                    image: e.target.value,
                     file: e.target.files[0],
                 },
             };
@@ -164,7 +164,7 @@ class EditProduct extends Component {
             .then((res) => {
                 console.log(res);
                 if(image) {
-                    productService.addImage(res.data.id, this.state.file).then(this.setState({ submitted: true }))
+                    productService.addImage(res.data.id, this.state.currentProduct.file).then(this.setState({ submitted: true }))
                 }
                 this.setState({submitted: true});
                 callback();
