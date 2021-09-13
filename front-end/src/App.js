@@ -32,8 +32,9 @@ function App() {
   }
   useEffect(() => {
     checkLoggedIn();
-    let checkLoggedInInterval = setInterval(() => checkLoggedIn(), 30000);
-    return () => clearInterval(checkLoggedInInterval);
+    //need a better method of checking for expiration of token
+    // let checkLoggedInInterval = setInterval(() => checkLoggedIn(), 30000);
+    // return () => clearInterval(checkLoggedInInterval);
   }, []);
 
 

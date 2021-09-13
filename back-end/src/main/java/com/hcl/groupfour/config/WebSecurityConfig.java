@@ -69,19 +69,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		// We don't need CSRF for this example
 		httpSecurity.cors().and().csrf().disable()
-				// dont authenticate this particular request
-				.authorizeRequests().antMatchers("/authenticate","/register", "/products_sorted", "/swagger-ui.html/**", "/configuration/**","/swagger-resources/**", "/v2/api-docs","/webjars/**").permitAll()
+				.authorizeRequests().antMatchers("/authenticate","/register", "/categories_by_name", "/products_sorted", "/swagger-ui.html/**", "/configuration/**","/swagger-resources/**", "/v2/api-docs","/webjars/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/products", "/categories", "/image/*").permitAll()
 				.antMatchers(HttpMethod.POST, "/products","/products_image/*").hasRole("ADMIN")
 				.antMatchers(HttpMethod.PUT, "/products/*").hasRole("ADMIN")
 				.antMatchers(HttpMethod.DELETE, "/products/*").hasRole("ADMIN")
-				// all other requests need to be authenticated
-				.anyRequest().authenticated().and().
-				// make sure we use stateless session; session won't be used to
-				// store user's state.
-				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+				.anyRequest().authenticated().and()
+				// make sure we use stateless session; session won't be used to store user's state.
+				.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		// Add a filter to validate the tokens with every request

@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { CartTable } from '../components/CartTable';
 import Container from 'react-bootstrap/Container';

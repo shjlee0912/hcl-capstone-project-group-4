@@ -41,7 +41,6 @@ public class UserService {
 		if(ur.findByUsername(userDTO.getUsername())!=null) {
 			throw new UserNameUnavailableException();
 		}
-		System.out.println(userDTO);
 		User newUser = new User();
 		newUser.setUsername(userDTO.getUsername());
 		newUser.setFirstName(userDTO.getFirstName());

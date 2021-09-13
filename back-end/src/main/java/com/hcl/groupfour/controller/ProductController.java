@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hcl.groupfour.model.Category;
 import com.hcl.groupfour.model.Product;
 import com.hcl.groupfour.model.ProductFilterObject;
 import com.hcl.groupfour.service.ProductService;
@@ -75,6 +76,11 @@ public class ProductController {
 	public ResponseEntity<List<String>> getAllCategoryNames() {
 		return ResponseEntity.ok(ps.getAllProductCategoryNames());
 	}
+	
+	@PostMapping("/categories_by_name")
+	public ResponseEntity<List<Category>> getAllCategories(@RequestBody String[] names) {
+		return ResponseEntity.ok(ps.getCategoriesByName(names));
+	}
 
 	
 	@GetMapping("/products/{id}")
@@ -118,6 +124,7 @@ public class ProductController {
 		if(prd == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		log.info("successfully updated product "+id);
 		return new ResponseEntity<>(prd, HttpStatus.OK);
 	}
 	

@@ -39,10 +39,9 @@ export const catalogSlice = createSlice({
             minPrice: null,
             usingMaxPrice: false,
             maxPrice: null
-        }, //filtering mechanism yet to be determined
-        sort: "AZ", //sorting mechanism yet to be determined
-                    //possible AZ, ZA, PRICE_ASC, PRICE_DESC
-        categories: ["categoryA", "catB", 'a',"C"],
+        }, 
+        sort: "AZ", //AZ, ZA, PRICE_ASC, PRICE_DESC
+        categories: [],
         page: 1,
     },
     reducers: {

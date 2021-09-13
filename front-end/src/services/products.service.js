@@ -14,6 +14,10 @@ class ProductService {
         return axios.get(url+"/categories");
     }
 
+    getCategoriesByName(names) {
+        return axios.post(url+"/categories_by_name", names);
+    }
+
     create(data){
         return axios.post(url+"/products", data, {withCredentials: true, headers: {Authorization: "Bearer "+localStorage.getItem("jwt")}});
     }

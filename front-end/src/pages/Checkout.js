@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearCart } from '../redux/cartSlice';
 import OrdersService from '../services/orders.service';
+import { reload } from '../redux/catalogSlice';
 import { priceFormatter } from '../utilFunctions';
 import { AddressInput } from '../components/AddressInput';
 import { Container, Button, Form } from 'react-bootstrap';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Redirect } from 'react-router';
+import { LinkContainer } from 'react-router-bootstrap';
 
 
 const cardOptions = {
@@ -30,6 +32,7 @@ export const Checkout = () => {
     const [userAddrId, setUserAddrId] = useState(user.addresses[0] && user.addresses[0].id);
     const dispatch = useDispatch();
 
+    const [submitted, setSubmitted] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [paymentFailed, setPaymentFailed] = useState(false)
 
@@ -43,7 +46,7 @@ export const Checkout = () => {
     const [lastName, setLastName] = useState(user.lastName);
     const [nameFailed, setNameFailed] = useState(false);
 
-    if(items.length===0) {
+    if(items.length===0 && !submitted) {
         return <Redirect to="/cart"/>
     }
 
@@ -117,7 +120,9 @@ export const Checkout = () => {
         try {
             const response = await OrdersService.placeOrder(orderobj);
             setDisabled(false);
+            setSubmitted(true);
             dispatch(clearCart());
+            dispatch(reload());
         } catch(err) {
             setPaymentFailed(true);
             setDisabled(false);
@@ -125,7 +130,14 @@ export const Checkout = () => {
 
     }
 
-    return (<>
+    return (submitted
+        ?(<Container className="m-3">
+            <h3>Order Submitted</h3>
+            <LinkContainer to="/">
+                <Button variant="success">back to home page</Button>
+            </LinkContainer>
+        </Container>)
+        :(<>
         <Container/>
             <Container className="mb-4 mt-4">
                 <h2>Checkout</h2>
@@ -160,5 +172,6 @@ export const Checkout = () => {
                 <Button disabled={disabled} variant="success" onClick={submitPayment}>Confirm Payment of {priceFormatter.format(total)}</Button>
             </div>
         <Container/>
-    </>);
+    </>)
+    );
 }

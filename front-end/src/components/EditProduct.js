@@ -3,7 +3,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { getProducts } from "../redux/catalogSlice";
 import productService from "../services/products.service";
 import { EditProductForm } from "./EditProductForm";
-import Button from 'react-bootstrap/Button';
+import { Button, Container } from 'react-bootstrap';
 
 class EditProduct extends Component {
     constructor(props) {
@@ -15,6 +15,8 @@ class EditProduct extends Component {
         this.onChangeImage = this.onChangeImage.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.updateProduct = this.updateProduct.bind(this);
+        this.addCategory = this.addCategory.bind(this);
+        this.removeCategory = this.removeCategory.bind(this);
         this.state = {
             currentProduct: {
                 id: null,
@@ -24,6 +26,7 @@ class EditProduct extends Component {
                 price: 0,
                 image: "",
                 description: "",
+                categories: [],
                 submitted: false,
             },
             submitted: false,
@@ -36,8 +39,12 @@ class EditProduct extends Component {
         productService.getProductById(id)
             .then((response) => {
                 this.setState({
-                    currentProduct: response.data,
+                    currentProduct: {
+                        ...response.data,
+                        categories: response.data.categories.map(c => c.name)
+                    },
                 });
+                console.log(response.data.categories)
                 console.log(response.data);
             })
             .catch((e) => {
@@ -106,6 +113,27 @@ class EditProduct extends Component {
         });
     }
 
+    addCategory(e) {
+        let cat = e.target.value;
+        if(cat==="")
+            return;
+        this.setState({
+            currentProduct: {
+                ...this.state.currentProduct,
+                categories: [...this.state.currentProduct.categories, cat],
+            }
+        })
+    }
+
+    removeCategory(cat) {
+        this.setState({
+            currentProduct: {
+                ...this.state.currentProduct,
+                categories: this.state.currentProduct.categories.filter(c => c!==cat),
+            }
+        })
+    }
+
     onChangeDescription(e) {
         const desc = e.target.value;
         this.setState(function (prevState) {
@@ -118,20 +146,28 @@ class EditProduct extends Component {
         });
     }
 
-    updateProduct(event) {
+    async updateProduct(event, callback) {
         event.preventDefault();
         console.log("updateProduct()");
         console.log(this.state.currentProduct.id);
         console.log(this.state.currentProduct);
         const{name,brand,inventory,price,image,description} = this.state.currentProduct;
         console.log(this.state.currentProduct);
-        productService.update(this.state.currentProduct.id, {name,brand,inventory,price,description})
+        let categories;
+        try {
+            const response = await productService.getCategoriesByName(this.state.currentProduct.categories);
+            categories = response.data
+        } catch(err) {
+            console.log(err);
+        } 
+        productService.update(this.state.currentProduct.id, {name,brand,inventory,price,description, categories})
             .then((res) => {
                 console.log(res);
                 if(image) {
                     productService.addImage(res.data.id, this.state.file).then(this.setState({ submitted: true }))
                 }
-                
+                this.setState({submitted: true});
+                callback();
             })
             .catch((e) => {
                 console.log(e);
@@ -146,14 +182,16 @@ class EditProduct extends Component {
                         <h4>You submitted successfully</h4>
                         <LinkContainer to="/admin"><Button variant="success" size="sm">Go Back to Catalog</Button></LinkContainer>
                     </div>
-                ) : (
-                    <EditProductForm name={this.state.currentProduct.name} changeName={this.onChangeName}
-                        brand={this.state.currentProduct.brand} changeBrand={this.onChangeBrand}
-                        inventory={this.state.currentProduct.inventory} changeInventory={this.onChangeInventory}
-                        price={this.state.currentProduct.price} changePrice={this.onChangePrice}
-                        image={this.state.currentProduct.image} changeImage={this.onChangeImage}
-                        description={this.state.currentProduct.description} changeDescription={this.onChangeDescription}
-                        updateProduct={this.updateProduct} />
+                ) : (<Container className="mb-3">
+                        <EditProductForm name={this.state.currentProduct.name} changeName={this.onChangeName}
+                            brand={this.state.currentProduct.brand} changeBrand={this.onChangeBrand}
+                            inventory={this.state.currentProduct.inventory} changeInventory={this.onChangeInventory}
+                            price={this.state.currentProduct.price} changePrice={this.onChangePrice}
+                            image={this.state.currentProduct.image} changeImage={this.onChangeImage}
+                            description={this.state.currentProduct.description} changeDescription={this.onChangeDescription}
+                            categories={this.state.currentProduct.categories} addCategory={this.addCategory} removeCategory={this.removeCategory}
+                            updateProduct={this.updateProduct} />
+                    </Container>
                 )}
             </div>
         )

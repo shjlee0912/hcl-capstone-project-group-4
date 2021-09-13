@@ -20,6 +20,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hcl.groupfour.model.Category;
 import com.hcl.groupfour.model.Product;
 import com.hcl.groupfour.model.ProductFilterObject;
 import com.hcl.groupfour.repository.CategoryRepository;
@@ -90,6 +91,7 @@ public class ProductService {
 			p.setInventory(prd.getInventory());
 			p.setPrice(prd.getPrice());
 			p.setDescription(prd.getDescription());
+			p.setCategories(prd.getCategories());
 			return pr.save(p);
 		}
 		return null;
@@ -97,6 +99,10 @@ public class ProductService {
 	
 	public List<String> getAllProductCategoryNames() {
 		return cr.findAll().stream().map(cat -> cat.getName()).collect(Collectors.toList());
+	}
+	
+	public List<Category> getCategoriesByName(String[] names) {
+		return cr.findByNameIn(Arrays.asList(names));
 	}
 	
 	public Product getById(Long id) {

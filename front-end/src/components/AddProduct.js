@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Container } from "react-bootstrap";
+import { AiOutlineConsoleSql } from "react-icons/ai";
 import { connect } from "react-redux";
 import productsService from "../services/products.service";
 import { NewProductForm } from "./NewProductForm";
@@ -14,12 +16,15 @@ class AddProduct extends Component {
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.saveProduct = this.saveProduct.bind(this);
         this.newProduct = this.newProduct.bind(this);
+        this.addCategory = this.addCategory.bind(this);
+        this.removeCategory = this.removeCategory.bind(this);
         this.state = {
             id: null,
             name: "",
             brand: "",
             inventory: 0,
             price: 0,
+            categories: [],
             image: "",
             description: "",
             submitted: false,
@@ -56,14 +61,6 @@ class AddProduct extends Component {
             image: e.target.value,
             file: e.target.files[0]
         });
-
-        // const formData = new FormData();
-        // formData.append('file',this.state.image);
-        // productsService.addImage(this.state.id, formData)
-        //     .then(res =>{
-        //         console.log(res.data);
-        //         alert("File uploaded successfully");
-        //     });
     }
 
     onChangeDescription(e) {
@@ -72,11 +69,33 @@ class AddProduct extends Component {
         });
     }
 
+    addCategory(e) {
+        let cat = e.target.value;
+        if(cat==="")
+            return;
+        this.setState({
+            categories: [...this.state.categories, cat],
+        })
+    }
+
+    removeCategory(cat) {
+        this.setState({
+            categories: this.state.categories.filter(c => c!==cat),
+        })
+    }
+
     
-    saveProduct(e) {
+    async saveProduct(e, callback) {
         e.preventDefault();
         const { name, brand, inventory, price, image, description } = this.state;
-        productsService.create({name, brand, inventory, price, description})
+        let categories;
+        try {
+            const response = await productsService.getCategoriesByName(this.state.categories);
+            categories = response.data
+        } catch(err) {
+            console.log(err);
+        } 
+        productsService.create({name, brand, inventory, price, description, categories})
             .then((res) => {
                 let data = res.data;
                 this.setState({
@@ -85,11 +104,13 @@ class AddProduct extends Component {
                     brand: data.brand,
                     inventory: data.inventory,
                     price: data.price,
+                    categories: data.categories.map(c => c.name),
                     //image: data.image,
                     description: data.description,
                     submitted: true,
                 });
                 productsService.addImage(this.state.id, this.state.file);
+                callback();
             }).catch((e) => {
                 console.log(e);
             });
@@ -103,6 +124,7 @@ class AddProduct extends Component {
             inventory: 0,
             price: 0,
             image: "",
+            categories: [],
             description: "",
             submitted: false,
         });
@@ -116,14 +138,17 @@ class AddProduct extends Component {
                         <h4>You submitted successfully</h4>
                         <button className="btn btn-success" onClick={this.newProduct}>Add</button>
                     </div>
-                ) : (
-                    <NewProductForm name={this.state.name} changeName={this.onChangeName}
-                        brand={this.state.brand} changeBrand={this.onChangeBrand}
-                        inventory={this.state.inventory} changeInventory={this.onChangeInventory}
-                        price={this.state.price} changePrice={this.onChangePrice}
-                        image={this.state.image} changeImage={this.onChangeImage}
-                        description={this.state.description} changeDescription={this.onChangeDescription}
-                        saveProduct={this.saveProduct} />
+                ) : ( <Container className="mb-3">
+                        <h3>Add a New Product</h3>
+                        <NewProductForm name={this.state.name} changeName={this.onChangeName}
+                            brand={this.state.brand} changeBrand={this.onChangeBrand}
+                            inventory={this.state.inventory} changeInventory={this.onChangeInventory}
+                            price={this.state.price} changePrice={this.onChangePrice}
+                            image={this.state.image} changeImage={this.onChangeImage}
+                            description={this.state.description} changeDescription={this.onChangeDescription}
+                            categories={this.state.categories} addCategory={this.addCategory} removeCategory={this.removeCategory}
+                            saveProduct={this.saveProduct} />
+                    </Container>
                 )}
             </div>
         );
