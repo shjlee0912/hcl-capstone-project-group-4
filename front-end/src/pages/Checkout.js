@@ -98,7 +98,7 @@ export const Checkout = () => {
         } else {
             addressId = userAddrId;
         }
-        const cardElement = elements.getElement(CardElement)
+        const cardElement = elements.getElement(CardElement);
 
         const result = await stripe.createToken(cardElement);
 
