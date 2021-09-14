@@ -7,6 +7,7 @@ import { logout } from '../redux/authSlice';
 import { clearCart } from '../redux/cartSlice';
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { useSelector, useDispatch } from 'react-redux';
+import { RoleChecker } from './Auth/RoleChecker';
 import './Topbar.css';
 
 
@@ -26,16 +27,22 @@ export const Topbar = () => {
                 <div className="toggle-margin"><Navbar.Toggle aria-controls="responsive-navbar-nav"/></div>
                 <Navbar.Collapse className="justify-content-between">
                     <Nav>
-                        <LinkContainer className="link" to="/products"><Navbar.Text>View Products</Navbar.Text></LinkContainer>
-                        {user&&user.roles.includes("ROLE_ADMIN")?<LinkContainer className="link" to="/admin"><Navbar.Text>Edit Catalog</Navbar.Text></LinkContainer>:null}
-                        {user&&user.roles.includes("ROLE_ADMIN")?<LinkContainer className="link" to="/new-products"><Navbar.Text>Add New Product</Navbar.Text></LinkContainer>:null}
-                        {user&&user.roles.includes("ROLE_ADMIN")?<Nav.Link className="link" href="http://localhost:9191/swagger-ui.html"><Navbar.Text>View Swagger-UI</Navbar.Text></Nav.Link>:null}
+                        <RoleChecker role="ROLE_USER">
+                            <LinkContainer className="link" to="/products"><Navbar.Text>View Products</Navbar.Text></LinkContainer>
+                        </RoleChecker>
+                        <RoleChecker role="ROLE_ADMIN">
+                            <LinkContainer className="link" to="/admin"><Navbar.Text>Edit Catalog</Navbar.Text></LinkContainer>
+                            <LinkContainer className="link" to="/new-products"><Navbar.Text>Add New Product</Navbar.Text></LinkContainer>
+                            <Nav.Link className="link" href="http://localhost:9191/swagger-ui.html"><Navbar.Text>View Swagger-UI</Navbar.Text></Nav.Link>
+                        </RoleChecker>
                     </Nav>
                     <div className="toggle-margin">
                         <Nav> 
                             {loggedIn?<Navbar.Text ><Badge bg="secondary">Logged in as {user?user.username:null}</Badge></Navbar.Text>:null}
-                            {loggedIn? <LinkContainer className="link" to="/cart"><Navbar.Text><AiOutlineShoppingCart size="1.7rem"/><Badge pill bg="info">{numCartItems}</Badge></Navbar.Text></LinkContainer>:null}
-                            {loggedIn?<Navbar.Text className="link" onClick={() => {
+                            <RoleChecker role="ROLE_USER">
+                                <LinkContainer className="link" to="/cart"><Navbar.Text><AiOutlineShoppingCart size="1.7rem"/><Badge pill bg="info">{numCartItems}</Badge></Navbar.Text></LinkContainer>
+                            </RoleChecker>
+                            {user?<Navbar.Text className="link" onClick={() => {
                                 dispatch(logout()); 
                                 dispatch(clearCart());
                             }}>Logout</Navbar.Text>:null}

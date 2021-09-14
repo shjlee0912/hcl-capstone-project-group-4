@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import { AuthRoute } from './components/Auth/AuthRoute';
 import { Topbar } from './components/Topbar';
 import { BrowseProducts } from './pages/BrowseProducts';
 import { ViewCart } from './pages/ViewCart';
@@ -32,7 +33,7 @@ function App() {
   }
   useEffect(() => {
     checkLoggedIn();
-    //need a better method of checking for expiration of token
+    //need a better method of checking for expiration of token, should read from JWT
     // let checkLoggedInInterval = setInterval(() => checkLoggedIn(), 30000);
     // return () => clearInterval(checkLoggedInInterval);
   }, []);
@@ -58,31 +59,24 @@ function App() {
           <Route exact path="/register">
             <Register/>
           </Route>
-          <Route path="/products">
+          <AuthRoute path="/products" role="ROLE_USER">
             <BrowseProducts/>
-          </Route>
-          <Route path="/cart">
+          </AuthRoute>
+          <AuthRoute path="/cart" role="ROLE_USER">
             <ViewCart/>
-          </Route>
-          <Route path="/checkout">
-            {user
-              ?<Checkout/>
-              :<Redirect to="/"/>
-            }
-          </Route>
-          <Route path="/new-products">
-          {user && user.roles.includes("ROLE_ADMIN")
-              ?<AddProduct/>
-              :null
-            }
-          </Route>
-          <Route path='/edit-products/:id' component={EditProduct}/>
-          <Route path="/admin">
-            {user && user.roles.includes("ROLE_ADMIN")
-              ?<AdminView/>
-              :null
-            }
-          </Route>
+          </AuthRoute>
+          <AuthRoute path="/checkout" role="ROLE_USER">
+            <Checkout/>
+          </AuthRoute>
+          <AuthRoute path="/new-products" role="ROLE_ADMIN">
+            <AddProduct/>
+          </AuthRoute>
+          <AuthRoute path="/edit-products/:id" role="ROLE_ADMIN">
+            <EditProduct/>
+          </AuthRoute>
+          <AuthRoute path="/admin" role="ROLE_ADMIN">
+            <AdminView/>
+          </AuthRoute>
         </Switch>
       </Router>
   </>);

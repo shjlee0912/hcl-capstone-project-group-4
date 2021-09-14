@@ -6,8 +6,9 @@ import './index.css';
 import App from './App';
 import store from './redux/store';
 import { Provider } from 'react-redux';
+import CONFIG from './config/config';
 
-const stripePromise = loadStripe("pk_test_51JWj0pIEb7HWAVreamX2kRQvYtCcTNqh4nKSIpruKIYMN8ZIxX8WZ4fNcbtTyS8oDG4Jf0LKQw4jRDQAizpIAI4300ONv9IY9p");
+const stripePromise = loadStripe(CONFIG.STRIPE_KEY);
 
 ReactDOM.render(
   <React.StrictMode>
