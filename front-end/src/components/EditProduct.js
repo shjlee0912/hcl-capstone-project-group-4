@@ -44,8 +44,6 @@ class EditProduct extends Component {
                         categories: response.data.categories.map(c => c.name)
                     },
                 });
-                console.log(response.data.categories)
-                console.log(response.data);
             })
             .catch((e) => {
                 console.log(e);
@@ -148,11 +146,7 @@ class EditProduct extends Component {
 
     async updateProduct(event, callback) {
         event.preventDefault();
-        console.log("updateProduct()");
-        console.log(this.state.currentProduct.id);
-        console.log(this.state.currentProduct);
         const{name,brand,inventory,price,image,description} = this.state.currentProduct;
-        console.log(this.state.currentProduct);
         let categories;
         try {
             const response = await productService.getCategoriesByName(this.state.currentProduct.categories);
@@ -162,7 +156,6 @@ class EditProduct extends Component {
         } 
         productService.update(this.state.currentProduct.id, {name,brand,inventory,price,description, categories})
             .then((res) => {
-                console.log(res);
                 if(image) {
                     productService.addImage(res.data.id, this.state.currentProduct.file).then(this.setState({ submitted: true }))
                 }

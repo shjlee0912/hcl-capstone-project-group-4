@@ -71,9 +71,7 @@ function App() {
           <AuthRoute path="/new-products" role="ROLE_ADMIN">
             <AddProduct/>
           </AuthRoute>
-          <AuthRoute path="/edit-products/:id" role="ROLE_ADMIN">
-            <EditProduct/>
-          </AuthRoute>
+          <AuthRoute path="/edit-products/:id" role="ROLE_ADMIN" component={EditProduct}/>
           <AuthRoute path="/admin" role="ROLE_ADMIN">
             <AdminView/>
           </AuthRoute>

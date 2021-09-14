@@ -8,7 +8,6 @@ export const EditProductForm = (props) => {
     useEffect(() => {
         dispatch(getCategories())
     }, []);
-    console.log(props.categories)
     const allCategories = useSelector(state => state.catalog.categories);
     return (
         <div className="edit-product-form">
