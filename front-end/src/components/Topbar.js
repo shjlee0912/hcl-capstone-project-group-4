@@ -27,9 +27,10 @@ export const Topbar = () => {
                 <div className="toggle-margin"><Navbar.Toggle aria-controls="responsive-navbar-nav"/></div>
                 <Navbar.Collapse className="justify-content-between">
                     <Nav>
-                        <RoleChecker role="ROLE_USER">
-                            <LinkContainer className="link" to="/products"><Navbar.Text>View Products</Navbar.Text></LinkContainer>
-                        </RoleChecker>
+                        {!user || user.roles.includes("ROLE_USER")
+                            ?<LinkContainer className="link" to="/products"><Navbar.Text>View Products</Navbar.Text></LinkContainer>
+                            :null
+                        }
                         <RoleChecker role="ROLE_ADMIN">
                             <LinkContainer className="link" to="/admin"><Navbar.Text>Edit Catalog</Navbar.Text></LinkContainer>
                             <LinkContainer className="link" to="/new-products"><Navbar.Text>Add New Product</Navbar.Text></LinkContainer>

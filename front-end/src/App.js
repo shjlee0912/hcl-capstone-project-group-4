@@ -59,9 +59,12 @@ function App() {
           <Route exact path="/register">
             <Register/>
           </Route>
-          <AuthRoute path="/products" role="ROLE_USER">
-            <BrowseProducts/>
-          </AuthRoute>
+          <Route path="/products">
+            {!user || user.roles.includes("ROLE_USER")
+              ?<BrowseProducts/>
+              :<Redirect to="/"/>
+            }
+          </Route>
           <AuthRoute path="/cart" role="ROLE_USER">
             <ViewCart/>
           </AuthRoute>
