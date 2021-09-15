@@ -33,6 +33,7 @@ export const Topbar = () => {
                         <RoleChecker role="ROLE_ADMIN">
                             <LinkContainer className="link" to="/admin"><Navbar.Text>Edit Catalog</Navbar.Text></LinkContainer>
                             <LinkContainer className="link" to="/new-products"><Navbar.Text>Add New Product</Navbar.Text></LinkContainer>
+                            {/* hid link for swagger-ui.html */}
                             {/* <Nav.Link className="link" href="http://localhost:9191/swagger-ui.html"><Navbar.Text>View Swagger-UI</Navbar.Text></Nav.Link> */}
                         </RoleChecker>
                     </Nav>
